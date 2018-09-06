@@ -20,7 +20,6 @@ simplifyLayoutElement.addEventListener('click', event => {
   }
 })
 
-
 // Helper functions
 function saveOptions() {
   const theme = document.getElementById('theme').value;
@@ -31,6 +30,8 @@ function saveOptions() {
   const isTrendingLimit = document.getElementById('trending-limit').checked;
   const trendingLimitValue = parseInt(document.getElementById('trending-limit-value').value, 10);
   const isSimplifyLayout = document.getElementById('simplify-layout').checked;
+  const isShowGifs = document.getElementById('display-gifs').checked;
+  const isShowVideos = document.getElementById('display-videos').checked;
 
   chrome.storage.sync.set({
     theme,
@@ -40,7 +41,9 @@ function saveOptions() {
     hotLimitValue,
     isTrendingLimit,
     trendingLimitValue,
-    isSimplifyLayout
+    isSimplifyLayout,
+    isShowGifs,
+    isShowVideos
   }, () => {
     const status = document.getElementById('status');
 
@@ -61,6 +64,8 @@ function restoreOptions() {
     document.getElementById('trending-limit').checked = items.isTrendingLimit;
     document.getElementById('trending-limit-value').value = items.trendingLimitValue;
     document.getElementById('simplify-layout').checked = items.isSimplifyLayout;
+    document.getElementById('display-gifs').checked = items.isShowGifs;
+    document.getElementById('display-videos').checked = items.isShowVideos;
   });
 }
 

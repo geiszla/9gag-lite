@@ -7,6 +7,10 @@ body {
     margin-top: 10px;
 }
 
+.option-title {
+    margin-top: 20px;
+}
+
 .indented-option {
     margin-left: 20px;
 }

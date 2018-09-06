@@ -2,9 +2,11 @@ const defaultOptions = {
   theme: 'dark',
   isHideAds: true,
   isBlockPromoted: true,
-  isHotLimit: true,
+  isHotLimit: false,
   hotLimitValue: 1000,
-  isTrendingLimit: true,
+  isTrendingLimit: false,
   trendingLimitValue: 500,
-  isSimplifyLayout: true
+  isSimplifyLayout: true,
+  isShowGifs: true,
+  isShowVideos: true
 }
