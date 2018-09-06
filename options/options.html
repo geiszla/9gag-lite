@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>9Gag Lite Options</title>
+    <link rel="stylesheet" type="text/CSS" href="options.css">
+</head>
+
+<body>        
+    <div class="select-option">
+        <label for="theme" class="option-label">Theme:</label>
+        <select name="theme" id="theme">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+        </select>
+    </div>
+
+    <div class="option">
+        <input type="checkbox" id="hide-ads" name="hide-ads" />
+        <label for="hide-ads">Hide ads</label>
+    </div>
+
+    <div class="option indented-option">
+            <input type="checkbox" id="simplify-layout" name="simplify-layout" />
+            <label for="simplify-layout">Simplify layout</label>
+        </div>
+
+    <div class="option">
+        <input type="checkbox" id="promoted" name="promoted" />
+        <label for="promoted-option">Block promoted posts</label>
+    </div>
+
+    <div class="option">
+        <input type="checkbox" id="hot-limit" name="hot-limit" />
+        <label for="hot-limit-option">
+            Limit <b>hot</b> page to posts with
+            <input
+                type="number"
+                id="hot-limit-value"
+                class="number-input"
+                name="hot-limit-value"
+                max="10000"
+            />
+            points.
+        </label>
+    </div>
+
+    <div class="option">
+        <input
+            type="checkbox"
+            id="trending-limit"
+            name="trending-limit"
+            checked="true"
+        />
+        <label for="trending-limit">
+            Limit <b>trending</b> page to posts with
+            <input
+                type="number"
+                id="trending-limit-value"
+                class="number-input"
+                name="trending-limit-value"
+                max="5000"
+            />
+            points.
+        </label>
+    </div>
+
+    <div id="status"></div>
+
+    <button id="save">Save</button>
+    <button id="restore">Restore defaults</button>
+
+    <script src="defaults.js"></script>
+    <script src="options.js"></script>
+</body>
+
+</html>

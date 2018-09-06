@@ -1,0 +1,69 @@
+/* Dark theme styles for the comments page */
+
+.post-afterbar-a.in-post-top {
+    background-color: var(--background-color-primary) !important;
+}
+
+.post-afterbar-a .post-nav a.next span.label {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+.post-afterbar-a .post-nav a.next span.arrow {
+    border-left-color: var(--background-color-grey-700) !important;
+}
+
+.post-afterbar-meta {
+    border: none !important;
+}
+
+.post-afterbar-meta a:hover {
+    text-decoration: none !important;
+    color: var(--color-primary) !important;
+}
+
+.post-afterbar-a.in-post-bot {
+    display: none;
+}
+
+
+/* Comment box */
+.CS3 .tab-bar ul.tab a:hover {
+    color: var(--color-primary) !important;
+}
+
+.CS3 .tab-bar ul.tab li.active a {
+    color: var(--color-secondary) !important;
+    border-bottom-color: var(--background-color-black) !important;
+}
+
+.CS3 .comment-box .action {
+    border: none !important;
+}
+
+.CS3 a.cmnt-btn {
+    background-color: var(--background-color-grey-700) !important;
+    border: none !important;
+}
+
+.CS3 a.cmnt-btn:hover {
+    background-color: var(--background-color-grey-600) !important;
+}
+
+.CS3 .tab-bar ul.tab li.active a {
+    color: var(--color-secondary);
+}
+
+
+/* Comments */
+.CS3 {
+    background-color: var(--background-color-primary) !important;
+    color: white !important;
+}
+
+.CS3 .comment-entry .payload .status,.CS3 .comment-entry .payload .username {
+    color: var(--color-secondary) !important;
+}
+
+.CS3 .collapsed-comment {
+    color: var(--color-secondary) !important;
+}

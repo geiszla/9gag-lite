@@ -1,0 +1,19 @@
+/* Dark theme styles for the user page */
+
+.activity-text {
+    color: var(--color-secondary) !important;
+}
+
+.profile .tab-bar ul.menu a.selected {
+    color: var(--color-primary) !important;
+    border-bottom-color: white;
+}
+
+.profile .tab-bar ul.menu a:hover {
+    color: var(--color-primary) !important;
+}
+
+section#list-view-2 .activity-text a {
+    color: var(--color-secondary) !important;
+}
+

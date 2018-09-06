@@ -1,0 +1,38 @@
+{
+    "manifest_version": 2,
+   
+    "name": "9GAG Lite",
+    "version": "0.1.0",
+    "description": "9Gag ad blocking and personalization",
+
+    "icons": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+     "128": "assets/icon128.png"
+    },
+
+    "permissions": [
+      "storage",
+      "tabs"
+    ],
+
+    "browser_action": {
+      "default_title": "9Gag Lite Options",
+      "default_popup": "options/options.html"
+    },
+   
+    "content_scripts": [{
+      "js": [ "options/defaults.js", "scripts/setup.js" ],
+      "run_at": "document_start",
+      "matches": [ "*://*.9gag.com/*" ]
+    }, {
+      "js": [ "scripts/content.js" ],
+      "run_at": "document_end",
+      "matches": [ "*://*.9gag.com/*" ]
+    }],
+
+    "web_accessible_resources": [
+      "styles/*"
+    ]
+   
+  }

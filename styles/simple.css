@@ -1,0 +1,54 @@
+/* Simplified layout styles */
+
+/* Navigation bar */
+.nav-menu .secondary {
+    display: none;
+}
+
+
+/* Left sidebar */
+.stealthy-scroll-container section[class=""] {
+    display: none;
+}
+
+.footer {
+    display: none;
+}
+
+
+/* Right sidebar */
+#sidebar {
+    display: none;
+}
+
+
+/* Main body */
+.main-wrap {
+    float: initial !important;
+}
+
+.featured-tag {
+    display: none !important;
+}
+
+section#list-view-2 article {
+    border: none !important;
+    margin-bottom: 50px !important;
+}
+
+.btn-vote a {
+    border: none !important;
+}
+
+.share {
+    display: none;
+}
+
+#jsid-sticky-button {
+    display: none;
+}
+
+/* Commments page */
+.post-afterbar-a.in-post-bot {
+    display: none;
+}

@@ -1,0 +1,9 @@
+/* Hide ads */
+
+#jsid-ad-container-banner_top {
+    display: none;
+}
+
+#jsid-ad-container-sidebar_top {
+    display: none;
+}

@@ -1,0 +1,99 @@
+/* Dark theme styles */
+
+:root {
+    --color-primary: white;
+    --color-secondary: rgba(255, 255, 255, 0.7);
+    --color-disabled: rgba(255, 255, 255, 0.5);
+
+    --background-color-black: #000000;
+    --background-color-grey-900: #212121;
+    --background-color-primary: #303030;
+    --background-color-grey-800: #424242;
+    --background-color-grey-700: #616161;
+    --background-color-grey-600: #757575;
+}
+
+body {
+    background-color: var(--background-color-primary) !important;
+    color: white;
+}
+
+
+/* Navigation bar */
+.user-function .btn-primary, .visitor-function .btn-primary {
+    background-color: var(--background-color-grey-800) !important;
+}
+
+.user-function .btn-primary, .visitor-function .btn-primary:hover {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+
+/* Left sidebar */
+.section-sidebar header h3 {
+    color: var(--color-primary) !important;
+}
+
+.section-sidebar .nav .label {
+    color: var(--color-secondary) !important;
+}
+
+.section-sidebar .nav li.selected .label {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+.section-sidebar .nav li.selected .label:hover {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+.section-sidebar .nav li .label:hover {
+    background-color: var(--background-color-grey-800) !important;
+}
+
+/* Right sidebard */
+section.block-feature-cover a {
+    color: var(--color-secondary) !important;
+}
+
+section.block-social-love .social-love a.instagram-follow {
+    color: var(--color-secondary);
+    border: none !important;
+}
+
+
+/* Main body */
+.featured-tag a {
+    color: var(--color-primary) !important;
+    background-color: var(--background-color-grey-800) !important;
+}
+
+section#list-view-2 article {
+    border-top: none !important;
+}
+
+section#list-view-2 h1 {
+    color: var(--color-primary) !important;
+}
+
+.loading a.btn {
+    background-color: var(--background-color-primary) !important;
+    border: none !important;
+}
+
+section.modal {
+    background-color: var(--background-color-primary) !important;
+}
+
+
+/* Login */
+a.btn,input[type=submit] {
+    background-color: var(--background-color-grey-800) !important;
+}
+
+a.btn:hover,input[type=submit]:hover {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+.btn-vote a {
+    border: none !important;
+}

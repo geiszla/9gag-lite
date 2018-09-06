@@ -1,0 +1,40 @@
+body {
+    width: 325px;
+    margin: 20px 20px 0 20px;
+}
+
+.option {
+    margin-top: 10px;
+}
+
+.indented-option {
+    margin-left: 20px;
+}
+
+.option-label {
+    margin-right: 5px;
+}
+
+.select-option {
+    margin-bottom: 20px;
+}
+
+.number-input {
+    width: 50px;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#status {
+    height: 10px;
+    margin-top: 8px;
+    color: green;
+}
+
+#save {
+    margin: 15px 15px 20px 0;
+}
