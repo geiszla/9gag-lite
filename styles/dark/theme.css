@@ -11,11 +11,13 @@
     --background-color-grey-800: #424242;
     --background-color-grey-700: #616161;
     --background-color-grey-600: #757575;
+
+    --background-color-blue-400: #42a5f5;
 }
 
 body {
     background-color: var(--background-color-primary) !important;
-    color: white;
+    color: var(--color-primary);
 }
 
 
@@ -28,6 +30,84 @@ body {
     background-color: var(--background-color-grey-700) !important;
 }
 
+.popup-menu ul {
+    background-color: var(--background-color-grey-900) !important;
+}
+
+.popup-menu a {
+    background-color: var(--background-color-grey-900) !important;
+    color: var(--color-primary) !important;
+}
+
+.popup-menu a:hover {
+    color: var(--color-secondary) !important;
+}
+
+
+/* Notification menu */
+.notification-menu {
+    background-color: var(--background-color-grey-900) !important;
+    border: none !important;
+}
+
+.notification-menu .title {
+    border-color: var(--background-color-grey-700) !important;
+}
+
+.notification-menu .title h3 {
+    color: var(--color-primary) !important;
+}
+
+.notification-list li a.item {
+    background-color: var(--background-color-grey-900) !important;
+    color: var(--color-primary) !important;
+    border-bottom-color: var(--background-color-grey-700) !important;
+}
+
+.notification-menu .bumper {
+    background-color: var(--background-color-grey-900) !important;
+    border-top-color: var(--background-color-grey-700)
+}
+
+.notification-menu .bumper a.see-all {
+    color: var(--color-primary) !important;
+}
+
+.notification-menu .bumper a.see-all:hover {
+    color: var(--color-secondary) !important;
+}
+
+
+/* Upload modal */
+section.modal.upload .source {
+    color: var(--color-primary) !important;
+    border-color: var(--background-color-primary) !important;
+}
+
+section.modal.upload .source:hover {
+    background-color: var(--background-color-grey-800) !important;
+}
+
+section.modal.upload .source.file span.btn {
+    background-color: var(--background-color-grey-700) !important;
+}
+
+.source.file:after {
+    filter: invert(0.7)
+}
+
+.source.pic-url:after {
+    filter: invert(0.7)
+}
+
+.source.vid-url:after {
+    filter: invert(0.7)
+}
+
+a.btn-close {
+    filter: invert(1)
+}
+
 
 /* Left sidebar */
 .section-sidebar header h3 {
@@ -38,8 +118,13 @@ body {
     color: var(--color-secondary) !important;
 }
 
+.icon {
+    filter: invert(1)
+}
+
 .section-sidebar .nav li.selected .label {
     background-color: var(--background-color-grey-700) !important;
+    color: var(--color-primary) !important;
 }
 
 .section-sidebar .nav li.selected .label:hover {
@@ -49,6 +134,7 @@ body {
 .section-sidebar .nav li .label:hover {
     background-color: var(--background-color-grey-800) !important;
 }
+
 
 /* Right sidebard */
 section.block-feature-cover a {
@@ -73,6 +159,10 @@ section#list-view-2 article {
 
 section#list-view-2 h1 {
     color: var(--color-primary) !important;
+}
+
+.btn-vote .more:active {
+    background-color: rgba(0,0,0,.04) !important;
 }
 
 .loading a.btn {

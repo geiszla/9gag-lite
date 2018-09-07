@@ -16,11 +16,10 @@ chrome.storage.sync.get(defaultOptions, items => {
   // Change theme
   if (userOptions.theme === 'dark') {
     addStylesToDOM('styles/dark/theme.css');
+    addStylesToDOM('styles/dark/listing.css');
 
     if (window.location.href.includes('/gag/')) {
       addStylesToDOM('styles/dark/comments.css');
-    } else if (window.location.href.includes('/u/') || window.location.href.includes('/tag/')) {
-      addStylesToDOM('styles/dark/listing.css');
     }
   }
 

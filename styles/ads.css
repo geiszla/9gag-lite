@@ -1,9 +1,8 @@
 /* Hide ads */
-
-#jsid-ad-container-banner_top {
+.topBannerAd-container {
     display: none;
 }
 
-#jsid-ad-container-sidebar_top {
+.block-ad {
     display: none;
 }

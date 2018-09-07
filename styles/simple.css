@@ -23,6 +23,13 @@
 
 
 /* Main body */
+.page {
+    margin: initial !important;
+    display: flex;
+    justify-content: flex-end;
+    width: 75%;
+}
+
 .main-wrap {
     float: initial !important;
 }

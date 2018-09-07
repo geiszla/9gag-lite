@@ -35,7 +35,6 @@ function initialize() {
 }
 
 function fixPosts(streamElement) {
-  console.log('start');
   const posts = Array.from(streamElement.querySelectorAll('article[id^="jsid-post-"]'));
 
   // Remove promoted posts
