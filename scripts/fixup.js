@@ -1,4 +1,5 @@
 // Fixes for after the content is loaded
+'use strict'
 
 // Load more posts if the initial streams contain less than what fits on screen
 setTimeout(() => {
