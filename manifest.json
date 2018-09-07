@@ -22,7 +22,7 @@
     },
    
     "content_scripts": [{
-      "js": [ "options/defaults.js", "scripts/setup.js" ],
+      "js": [ "globals.js", "scripts/setup.js" ],
       "run_at": "document_start",
       "matches": [ "*://*.9gag.com/*" ]
     }, {

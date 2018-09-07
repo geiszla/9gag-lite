@@ -15,22 +15,13 @@ chrome.storage.sync.get(defaultOptions, items => {
   }
 
   // Change theme
-  if (userOptions.theme === 'dark') {
-    addStylesToDOM('styles/dark/theme.css');
-    addStylesToDOM('styles/dark/listing.css');
+  if (userOptions.theme !== 'default') {
+    addStylesToDOM(`styles/${userOptions.theme}/theme.css`);
+    addStylesToDOM(`styles/${userOptions.theme}/styles.css`);
+    addStylesToDOM(`styles/${userOptions.theme}/listing.css`);
 
     if (window.location.href.includes('/gag/')) {
-      addStylesToDOM('styles/dark/comments.css');
+      addStylesToDOM(`styles/${userOptions.theme}/comments.css`);
     }
-  }
-
-  // Helper functions
-  function addStylesToDOM(relativePath) {
-    const stylesElement = document.createElement('link');
-    stylesElement.rel = 'stylesheet';
-    stylesElement.type = 'text/css';
-    stylesElement.href = chrome.runtime.getURL(relativePath);
-
-    document.head.appendChild(stylesElement);
   }
 });

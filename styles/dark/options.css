@@ -1,0 +1,8 @@
+body {
+    background-color: var(--background-color-primary);
+    color: var(--color-secondary);
+}
+
+#status {
+    color: var(--background-color-green-400);
+}

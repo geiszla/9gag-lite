@@ -24,19 +24,24 @@ document.getElementById('restore').addEventListener('click', restoreDefault);
 
 // Hide ads is always enabled when layout is simplified
 const simplifyLayoutElement = document.getElementById('isSimplifyLayout');
-document.getElementById('isHideAds').addEventListener('click', event => {
-    if (!event.target.checked) {
+document.getElementById('isHideAds').addEventListener('click', ({ target }) => {
+    if (!target.checked) {
       simplifyLayoutElement.checked = false;
       simplifyLayoutElement.disabled = true;
     } else {
       simplifyLayoutElement.disabled = false;
     }
 })
-simplifyLayoutElement.addEventListener('click', event => {
-  if (event.target.checked) {
+simplifyLayoutElement.addEventListener('click', ({ target }) => {
+  if (target.checked) {
     document.getElementById('isHideAds').checked = true;
   }
 })
+
+// Dynamic theme change
+document.getElementById('theme').addEventListener("change", ({ target }) => {
+  changeTheme(target.value);
+});
 
 // Functions
 function saveOptions() {
@@ -64,6 +69,8 @@ function restoreOptions() {
     // Apply string and int options (to value property)
     const valueOptions = stringOptions.concat(intOptions);
     valueOptions.forEach(option => document.getElementById(option).value = items[option]);
+
+    changeTheme(items.theme);
   });
 }
 
@@ -90,4 +97,17 @@ function reloadTabs() {
       chrome.tabs.reload(matchingTab.id);
     });
   });
+}
+
+function changeTheme(theme) {
+  const addedStyles = document.getElementsByClassName('9gag-lite-style');
+
+  Array.prototype.forEach.call(addedStyles, styleElement => {
+    styleElement.remove();
+  });
+
+  if (theme !== 'default') {
+    addStylesToDOM(`styles/${theme}/theme.css`);
+    addStylesToDOM(`styles/${theme}/options.css`);
+  }
 }
