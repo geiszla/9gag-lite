@@ -24,27 +24,27 @@
 
 /* Main body */
 .page {
-    margin: initial !important;
+    margin: initial;
     display: flex;
     justify-content: flex-end;
     width: 75%;
 }
 
 .main-wrap {
-    float: initial !important;
+    float: initial;
 }
 
 .featured-tag {
-    display: none !important;
+    display: none;
 }
 
 section#list-view-2 article {
-    border: none !important;
-    margin-bottom: 50px !important;
+    border: none;
+    margin-bottom: 50px;
 }
 
 .btn-vote a {
-    border: none !important;
+    border: none;
 }
 
 .share {
@@ -59,4 +59,15 @@ section#list-view-2 article {
 /* Commments page */
 .post-afterbar-a.in-post-bot {
     display: none;
+}
+
+
+/* Settings page */
+ul.form-nav {
+    top: 5px;
+    left: 150px;
+}
+
+ul.form-nav li a {
+    width: 100px;
 }

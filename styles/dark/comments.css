@@ -2,24 +2,24 @@
 
 /* Post section */
 .post-afterbar-a.in-post-top {
-    background-color: var(--background-color-primary) !important;
+    background-color: var(--background-color-primary);
 }
 
 .post-afterbar-a .post-nav a.next span.label {
-    background-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-700);
 }
 
 .post-afterbar-a .post-nav a.next span.arrow {
-    border-left-color: var(--background-color-grey-700) !important;
+    border-left-color: var(--background-color-grey-700);
 }
 
 .post-afterbar-meta {
-    border: none !important;
+    border: none;
 }
 
 .post-afterbar-meta a:hover {
-    text-decoration: none !important;
-    color: var(--color-primary) !important;
+    text-decoration: none;
+    color: var(--color-primary);
 }
 
 .post-afterbar-a.in-post-bot {
@@ -29,25 +29,25 @@
 
 /* Comment box */
 .CS3 .tab-bar ul.tab a:hover {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .CS3 .tab-bar ul.tab li.active a {
-    color: var(--color-secondary) !important;
-    border-bottom-color: var(--background-color-black) !important;
+    color: var(--color-secondary);
+    border-bottom-color: var(--background-color-black);
 }
 
 .CS3 .comment-box .action {
-    border: none !important;
+    border: none;
 }
 
 .CS3 a.cmnt-btn {
-    background-color: var(--background-color-grey-700) !important;
-    border: none !important;
+    background-color: var(--background-color-grey-700);
+    border: none;
 }
 
 .CS3 a.cmnt-btn:hover {
-    background-color: var(--background-color-grey-600) !important;
+    background-color: var(--background-color-grey-600);
 }
 
 .CS3 .tab-bar ul.tab li.active a {
@@ -57,14 +57,14 @@
 
 /* Comments */
 .CS3 {
-    background-color: var(--background-color-primary) !important;
-    color: white !important;
+    background-color: var(--background-color-primary);
+    color: white;
 }
 
 .CS3 .comment-entry .payload .status,.CS3 .comment-entry .payload .username {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }
 
 .CS3 .collapsed-comment {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }

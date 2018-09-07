@@ -1,82 +1,82 @@
 /* Dark theme styles */
 
 body {
-    background-color: var(--background-color-primary) !important;
+    background-color: var(--background-color-primary);
     color: var(--color-primary);
 }
 
 
 /* Popups */
 .popup-menu ul {
-    background-color: var(--background-color-grey-900) !important;
+    background-color: var(--background-color-grey-900);
 }
 
 .popup-menu a {
-    background-color: var(--background-color-grey-900) !important;
-    color: var(--color-primary) !important;
+    background-color: var(--background-color-grey-900);
+    color: var(--color-primary);
 }
 
 .popup-menu a:hover {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }
 
 
 /* Navigation bar */
 .user-function .btn-primary, .visitor-function .btn-primary {
-    background-color: var(--background-color-grey-800) !important;
+    background-color: var(--background-color-grey-800);
 }
 
 .user-function .btn-primary, .visitor-function .btn-primary:hover {
-    background-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-700);
 }
 
 
 /* Notification menu */
 .notification-menu {
-    background-color: var(--background-color-grey-900) !important;
-    border: none !important;
+    background-color: var(--background-color-grey-900);
+    border: none;
 }
 
 .notification-menu .title {
-    border-color: var(--background-color-grey-700) !important;
+    border-color: var(--background-color-grey-700);
 }
 
 .notification-menu .title h3 {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .notification-list li a.item {
-    background-color: var(--background-color-grey-900) !important;
-    color: var(--color-primary) !important;
-    border-bottom-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-900);
+    color: var(--color-primary);
+    border-bottom-color: var(--background-color-grey-700);
 }
 
 .notification-menu .bumper {
-    background-color: var(--background-color-grey-900) !important;
+    background-color: var(--background-color-grey-900);
     border-top-color: var(--background-color-grey-700)
 }
 
 .notification-menu .bumper a.see-all {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .notification-menu .bumper a.see-all:hover {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }
 
 
 /* Upload modal */
 section.modal.upload .source {
-    color: var(--color-primary) !important;
-    border-color: var(--background-color-primary) !important;
+    color: var(--color-primary);
+    border-color: var(--background-color-primary);
 }
 
 section.modal.upload .source:hover {
-    background-color: var(--background-color-grey-800) !important;
+    background-color: var(--background-color-grey-800);
 }
 
 section.modal.upload .source.file span.btn {
-    background-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-700);
 }
 
 .source.file:after {
@@ -98,11 +98,11 @@ a.btn-close {
 
 /* Left sidebar */
 .section-sidebar header h3 {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .section-sidebar .nav .label {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }
 
 .icon {
@@ -110,67 +110,72 @@ a.btn-close {
 }
 
 .section-sidebar .nav li.selected .label {
-    background-color: var(--background-color-grey-700) !important;
-    color: var(--color-primary) !important;
+    background-color: var(--background-color-grey-700);
+    color: var(--color-primary);
 }
 
 .section-sidebar .nav li.selected .label:hover {
-    background-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-700);
 }
 
 .section-sidebar .nav li .label:hover {
-    background-color: var(--background-color-grey-800) !important;
+    background-color: var(--background-color-grey-800);
 }
 
 
 /* Right sidebard */
 section.block-feature-cover a {
-    color: var(--color-secondary) !important;
+    color: var(--color-secondary);
 }
 
 section.block-social-love .social-love a.instagram-follow {
     color: var(--color-secondary);
-    border: none !important;
+    border: none;
 }
 
 
 /* Main body */
 .featured-tag a {
-    color: var(--color-primary) !important;
-    background-color: var(--background-color-grey-800) !important;
+    color: var(--color-primary);
+    background-color: var(--background-color-grey-800);
 }
 
 section#list-view-2 article {
-    border-top: none !important;
+    border-top: none;
 }
 
 section#list-view-2 h1 {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .btn-vote .more:active {
-    background-color: rgba(0,0,0,.04) !important;
+    background-color: rgba(0,0,0,.04);
 }
 
 .loading a.btn {
-    background-color: var(--background-color-primary) !important;
-    border: none !important;
+    background-color: var(--background-color-primary);
+    border: none;
 }
 
 section.modal {
-    background-color: var(--background-color-primary) !important;
+    background-color: var(--background-color-primary);
 }
 
 
 /* Login */
 a.btn,input[type=submit] {
-    background-color: var(--background-color-grey-800) !important;
+    background-color: var(--background-color-grey-800);
 }
 
 a.btn:hover,input[type=submit]:hover {
-    background-color: var(--background-color-grey-700) !important;
+    background-color: var(--background-color-grey-700);
 }
 
 .btn-vote a {
-    border: none !important;
+    border: none;
+}
+
+/* Settings page */
+ul.form-nav li a.selected {
+    background-color: var(--background-color-grey-700);
 }
