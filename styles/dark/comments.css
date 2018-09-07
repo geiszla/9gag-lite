@@ -1,5 +1,6 @@
 /* Dark theme styles for the comments page */
 
+/* Post section */
 .post-afterbar-a.in-post-top {
     background-color: var(--background-color-primary) !important;
 }

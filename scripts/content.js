@@ -41,44 +41,40 @@ function initialize() {
 function fixPosts(streamElement) {
   const posts = Array.from(streamElement.querySelectorAll('article[id^="jsid-post-"]'));
 
-  if (userOptions.isBlockPromoted) {
-    for (let i = 0; i < posts.length; i++) {
-      if (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
-        || !userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0]) {
-        posts[i].style.display = 'none';
-        posts.splice(i, 1);
-        i--;
-      }
+  // Filter post types
+  for (let i = 0; i < posts.length; i++) {
+    if (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
+      || !userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0]) {
+      posts[i].style.display = 'none';
+      posts.splice(i, 1);
+      i--;
     }
   }
 
+  // Page specific fixes
   const currentUrl = window.location.href;
 
   if (userOptions.isHotLimit && (currentUrl.endsWith('9gag.com/') || currentUrl.includes('/hot'))) {
     // HOT page: Remove posts with less than 1000 points
-    removePosts(posts, userOptions.hotLimitValue)
+    hidePosts(posts, userOptions.hotLimitValue)
   } else if (userOptions.isTrendingLimit && currentUrl.includes('/trending')) {
     // TRENDING page: Remove posts with less than 500 points
-    removePosts(posts, userOptions.trendingLimitValue);
+    hidePosts(posts, userOptions.trendingLimitValue);
   }
-
-
 }
 
-function removePosts(posts, pointLimit) {
-  if (userOptions.isHotLimit) {
-    posts.forEach(post => {
-      const pointString = post.getElementsByClassName('point')[0].textContent;
-      const pointRegex = /([0-9,]+).*points/;
-      const pointMatch = pointRegex.exec(pointString);
-  
-      if (pointMatch.length > 1) {
-        const pointCount = pointMatch[1].replace(',', '');
-  
-        if (parseInt(pointCount, 10) < pointLimit) {
-          post.remove();
-        }
+function hidePosts(posts, pointLimit) {
+  posts.forEach(post => {
+    const pointString = post.getElementsByClassName('point')[0].textContent;
+    const pointRegex = /([0-9,]+).*points/;
+    const pointMatch = pointRegex.exec(pointString);
+
+    if (pointMatch.length > 1) {
+      const pointCount = parseInt(pointMatch[1].replace(',', ''), 10);
+
+      if (pointCount < pointLimit) {
+        post.style.display = 'none';
       }
-    });
-  }
+    }
+  });
 }

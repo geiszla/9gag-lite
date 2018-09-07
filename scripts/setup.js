@@ -4,6 +4,7 @@ let userOptions = defaultOptions;
 chrome.storage.sync.get(defaultOptions, items => {
   userOptions = items;
 
+  // Hide ads
   if (userOptions.isHideAds) {
     addStylesToDOM('styles/ads.css');
   }

@@ -1,12 +1,30 @@
 'use strict'
 
+const booleanOptions = [
+  'isHideAds',
+  'isHotLimit',
+  'isTrendingLimit',
+  'isSimplifyLayout',
+  'isShowGifs',
+  'isShowVideos'
+];
+
+const stringOptions = [
+  'theme'
+]
+
+const intOptions = [
+  'hotLimitValue',
+  'trendingLimitValue'
+]
+
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
 document.getElementById('restore').addEventListener('click', restoreDefault);
 
 // Hide ads is always enabled when layout is simplified
-const simplifyLayoutElement = document.getElementById('simplify-layout');
-document.getElementById('hide-ads').addEventListener('click', event => {
+const simplifyLayoutElement = document.getElementById('isSimplifyLayout');
+document.getElementById('isHideAds').addEventListener('click', event => {
     if (!event.target.checked) {
       simplifyLayoutElement.checked = false;
       simplifyLayoutElement.disabled = true;
@@ -16,33 +34,19 @@ document.getElementById('hide-ads').addEventListener('click', event => {
 })
 simplifyLayoutElement.addEventListener('click', event => {
   if (event.target.checked) {
-    document.getElementById('hide-ads').checked = true;
+    document.getElementById('isHideAds').checked = true;
   }
 })
 
-// Helper functions
+// Functions
 function saveOptions() {
-  const theme = document.getElementById('theme').value;
-  const isHideAds = document.getElementById('hide-ads').checked;
-  const isHotLimit = document.getElementById('hot-limit').checked;
-  const hotLimitValue = parseInt(document.getElementById('hot-limit-value').value, 10);
-  const isTrendingLimit = document.getElementById('trending-limit').checked;
-  const trendingLimitValue = parseInt(document.getElementById('trending-limit-value').value, 10);
-  const isSimplifyLayout = document.getElementById('simplify-layout').checked;
-  const isShowGifs = document.getElementById('display-gifs').checked;
-  const isShowVideos = document.getElementById('display-videos').checked;
+  // Get option values from the DOM
+  const options = {}
+  booleanOptions.forEach(option => options[option] = document.getElementById(option).checked);
+  stringOptions.forEach(option => options[option] = document.getElementById(option).value);
+  intOptions.forEach(option => options[option] = parseInt(document.getElementById(option).value, 10));
 
-  chrome.storage.sync.set({
-    theme,
-    isHideAds,
-    isHotLimit,
-    hotLimitValue,
-    isTrendingLimit,
-    trendingLimitValue,
-    isSimplifyLayout,
-    isShowGifs,
-    isShowVideos
-  }, () => {
+  chrome.storage.sync.set(options, () => {
     const status = document.getElementById('status');
 
     status.textContent = 'Options saved.';
@@ -54,15 +58,12 @@ function saveOptions() {
 
 function restoreOptions() {
   chrome.storage.sync.get(defaultOptions, items => {
-    document.getElementById('theme').value = items.theme;
-    document.getElementById('hide-ads').checked = items.isHideAds;
-    document.getElementById('hot-limit').checked = items.isHotLimit;
-    document.getElementById('hot-limit-value').value = items.hotLimitValue;
-    document.getElementById('trending-limit').checked = items.isTrendingLimit;
-    document.getElementById('trending-limit-value').value = items.trendingLimitValue;
-    document.getElementById('simplify-layout').checked = items.isSimplifyLayout;
-    document.getElementById('display-gifs').checked = items.isShowGifs;
-    document.getElementById('display-videos').checked = items.isShowVideos;
+    // Apply boolean options (to checked property)
+    booleanOptions.forEach(option => document.getElementById(option).checked = items[option]);
+
+    // Apply string and int options (to value property)
+    const valueOptions = stringOptions.concat(intOptions);
+    valueOptions.forEach(option => document.getElementById(option).value = items[option]);
   });
 }
 

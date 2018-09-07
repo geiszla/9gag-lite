@@ -21,15 +21,7 @@ body {
 }
 
 
-/* Navigation bar */
-.user-function .btn-primary, .visitor-function .btn-primary {
-    background-color: var(--background-color-grey-800) !important;
-}
-
-.user-function .btn-primary, .visitor-function .btn-primary:hover {
-    background-color: var(--background-color-grey-700) !important;
-}
-
+/* Popups */
 .popup-menu ul {
     background-color: var(--background-color-grey-900) !important;
 }
@@ -41,6 +33,16 @@ body {
 
 .popup-menu a:hover {
     color: var(--color-secondary) !important;
+}
+
+
+/* Navigation bar */
+.user-function .btn-primary, .visitor-function .btn-primary {
+    background-color: var(--background-color-grey-800) !important;
+}
+
+.user-function .btn-primary, .visitor-function .btn-primary:hover {
+    background-color: var(--background-color-grey-700) !important;
 }
 
 
