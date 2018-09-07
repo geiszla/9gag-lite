@@ -41,13 +41,9 @@ function initialize() {
 function fixPosts(streamElement) {
   const posts = Array.from(streamElement.querySelectorAll('article[id^="jsid-post-"]'));
 
-  // Remove promoted posts
   if (userOptions.isBlockPromoted) {
     for (let i = 0; i < posts.length; i++) {
-      const titleElement = posts[i].getElementsByTagName('header')[0].getElementsByTagName('h1')[0];
-
-      if (titleElement.textContent.includes('[Promoted]')
-        || !userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
+      if (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
         || !userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0]) {
         posts[i].style.display = 'none';
         posts.splice(i, 1);

@@ -1,7 +1,6 @@
 const defaultOptions = {
   theme: 'dark',
   isHideAds: true,
-  isBlockPromoted: true,
   isHotLimit: false,
   hotLimitValue: 1000,
   isTrendingLimit: false,

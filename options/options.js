@@ -24,7 +24,6 @@ simplifyLayoutElement.addEventListener('click', event => {
 function saveOptions() {
   const theme = document.getElementById('theme').value;
   const isHideAds = document.getElementById('hide-ads').checked;
-  const isBlockPromoted = document.getElementById('promoted').checked;
   const isHotLimit = document.getElementById('hot-limit').checked;
   const hotLimitValue = parseInt(document.getElementById('hot-limit-value').value, 10);
   const isTrendingLimit = document.getElementById('trending-limit').checked;
@@ -36,7 +35,6 @@ function saveOptions() {
   chrome.storage.sync.set({
     theme,
     isHideAds,
-    isBlockPromoted,
     isHotLimit,
     hotLimitValue,
     isTrendingLimit,
@@ -58,7 +56,6 @@ function restoreOptions() {
   chrome.storage.sync.get(defaultOptions, items => {
     document.getElementById('theme').value = items.theme;
     document.getElementById('hide-ads').checked = items.isHideAds;
-    document.getElementById('promoted').checked = items.isBlockPromoted;
     document.getElementById('hot-limit').checked = items.isHotLimit;
     document.getElementById('hot-limit-value').value = items.hotLimitValue;
     document.getElementById('trending-limit').checked = items.isTrendingLimit;
