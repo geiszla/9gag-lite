@@ -43,7 +43,8 @@ function fixPosts(streamElement) {
 
   // Filter post types
   for (let i = 0; i < posts.length; i++) {
-    if (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
+    if (!userOptions.isShowImages && posts[i].getElementsByTagName('picture')[0]
+      || !userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
       || !userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0]) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);

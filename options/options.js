@@ -5,6 +5,7 @@ const booleanOptions = [
   'isHotLimit',
   'isTrendingLimit',
   'isSimplifyLayout',
+  'isShowImages',
   'isShowGifs',
   'isShowVideos'
 ];
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
 document.getElementById('restore').addEventListener('click', restoreDefault);
 
+// Dynamic theme change
+document.getElementById('theme').addEventListener("change", ({ target }) => {
+  changeTheme(target.value);
+});
+
 // Hide ads is always enabled when layout is simplified
 const simplifyLayoutElement = document.getElementById('isSimplifyLayout');
 document.getElementById('isHideAds').addEventListener('click', ({ target }) => {
@@ -37,11 +43,6 @@ simplifyLayoutElement.addEventListener('click', ({ target }) => {
     document.getElementById('isHideAds').checked = true;
   }
 })
-
-// Dynamic theme change
-document.getElementById('theme').addEventListener("change", ({ target }) => {
-  changeTheme(target.value);
-});
 
 // Functions
 function saveOptions() {
