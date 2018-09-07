@@ -10,7 +10,11 @@ const pageLoadObserver = new MutationObserver(mutationsList => {
     })
   });
 });
-pageLoadObserver.observe(document.getElementById('container'), {childList: true, subtree: true});
+
+const containerElement = document.getElementById('container');
+if (containerElement) {
+  pageLoadObserver.observe(containerElement, {childList: true, subtree: true});
+}
 
 // Initialize script
 initialize();
@@ -45,7 +49,7 @@ function fixPosts(streamElement) {
       if (titleElement.textContent.includes('[Promoted]')
         || !userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0]
         || !userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0]) {
-        posts[i].remove();
+        posts[i].style.display = 'none';
         posts.splice(i, 1);
         i--;
       }
