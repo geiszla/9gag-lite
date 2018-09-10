@@ -1,4 +1,4 @@
-// Global variables and functions that is needed for both the options and the content.
+// Global variables and functions that are needed for both the options and the content.
 
 // Functions
 function addStylesToDOM(relativePath) {

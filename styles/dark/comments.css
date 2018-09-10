@@ -58,7 +58,7 @@
 /* Comments */
 .CS3 {
     background-color: var(--background-color-primary);
-    color: white;
+    color: var(--color-primary)
 }
 
 .CS3 .comment-entry .payload .status,.CS3 .comment-entry .payload .username {

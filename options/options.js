@@ -1,5 +1,6 @@
 'use strict'
 
+// Option lists
 const booleanOptions = [
   'isHideAds',
   'isHotLimit',
@@ -19,19 +20,22 @@ const intOptions = [
   'trendingLimitValue'
 ]
 
+// Set up event listeners
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
 document.getElementById('restore').addEventListener('click', restoreDefault);
+
+// Set up option elements' behavior
 setupBehavior();
 
 // Functions
 function setupBehavior() {
-  // Dynamic theme change
+  // Change theme of options window when theme is changed
   document.getElementById('theme').addEventListener("change", ({ target }) => {
     changeTheme(target.value);
   });
   
-  // Hide ads is always enabled when layout is simplified
+  // Hide ads option is always enabled when layout is simplified
   const simplifyLayoutElement = document.getElementById('isSimplifyLayout');
   document.getElementById('isHideAds').addEventListener('click', ({ target }) => {
       if (!target.checked) {
@@ -46,8 +50,6 @@ function setupBehavior() {
       document.getElementById('isHideAds').checked = true;
     }
   })
-  
-  // At least one post type is always enabled
 }
 
 function saveOptions() {
@@ -59,6 +61,7 @@ function saveOptions() {
   stringOptions.forEach(option => options[option] = document.getElementById(option).value);
   intOptions.forEach(option => options[option] = parseInt(document.getElementById(option).value, 10));
 
+  // Save them to chrome sync storage
   chrome.storage.sync.set(options, () => {
     const status = document.getElementById('status');
 
@@ -76,6 +79,7 @@ function saveOptions() {
 }
 
 function restoreOptions() {
+  // Get options from chrome sync storage
   chrome.storage.sync.get(defaultOptions, items => {
     // Apply boolean options (to checked property)
     booleanOptions.forEach(option => document.getElementById(option).checked = items[option]);
@@ -92,6 +96,7 @@ function restoreDefault() {
   const isContinueRestore = confirm('Do you want to restore all options to their default value?');
 
   if (isContinueRestore === true) {
+    // Set chrome sync storage with default values
     chrome.storage.sync.set(defaultOptions, () => {
       restoreOptions();
       simplifyLayoutElement.disabled = false;
@@ -105,20 +110,17 @@ function restoreDefault() {
   }
 }
 
+// Helper functions
 function reloadTabs() {
   chrome.tabs.query({url: '*://*.9gag.com/*'}, matchingTabs => {
-    matchingTabs.forEach(matchingTab => {
-      chrome.tabs.reload(matchingTab.id);
-    });
+    matchingTabs.forEach(matchingTab => chrome.tabs.reload(matchingTab.id));
   });
 }
 
 function changeTheme(theme) {
   const addedStyles = document.getElementsByClassName('9gag-lite-style');
 
-  Array.prototype.forEach.call(addedStyles, styleElement => {
-    styleElement.remove();
-  });
+  Array.prototype.forEach.call(addedStyles, styleElement => styleElement.remove());
 
   if (theme !== 'default') {
     addStylesToDOM(`styles/${theme}/theme.css`);
@@ -131,15 +133,15 @@ function validateNumberInputs() {
 
   let isAllValid = true;
   Array.prototype.forEach.call(numberInputElements, inputElement => {
-    const isElementChecked = inputElement.id === 'hotLimitValue'
-      && document.getElementById('isHotLimit').checked
-      || inputElement.id === 'trendingLimitValue'
-      && document.getElementById('isTrendingLimit').checked;
+    const isElementChecked = (inputElement.id === 'hotLimitValue'
+      && document.getElementById('isHotLimit').checked)
+      || (inputElement.id === 'trendingLimitValue'
+      && document.getElementById('isTrendingLimit').checked);
 
-    const isValueValid = inputElement.max && parseInt(inputElement.value, 10) > inputElement.max
-    || inputElement.min && parseInt(inputElement.value, 10) < inputElement.min;
+    const isValueValid = inputElement.max && parseInt(inputElement.value, 10) <= inputElement.max
+      || inputElement.min && parseInt(inputElement.value, 10) >= inputElement.min;
 
-    if (isElementChecked && isValueValid) {
+    if (isElementChecked && !isValueValid) {
         showWarning(true, inputElement);
         isAllValid = false;
     } else {

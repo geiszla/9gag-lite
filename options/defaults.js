@@ -1,4 +1,4 @@
-// Deafult option values
+// Default option values
 const defaultOptions = {
   theme: 'dark',
   isHideAds: true,

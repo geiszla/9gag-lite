@@ -56,10 +56,10 @@ function fixPosts(streamElement) {
   const currentUrl = window.location.href;
 
   if (userOptions.isHotLimit && (currentUrl.endsWith('9gag.com/') || currentUrl.includes('/hot'))) {
-    // HOT page: Remove posts with less than 1000 points
+    // HOT page: Remove posts with less points than limit
     hidePosts(posts, userOptions.hotLimitValue)
   } else if (userOptions.isTrendingLimit && currentUrl.includes('/trending')) {
-    // TRENDING page: Remove posts with less than 500 points
+    // TRENDING page: Remove posts with less points than limit
     hidePosts(posts, userOptions.trendingLimitValue);
   }
 }
