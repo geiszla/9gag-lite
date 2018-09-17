@@ -16,11 +16,11 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 
 ### Planned
 
+- Normalize post order
 - Stop autoplaying `GIFs`/`videos`
-- Download images/GIFs/videos
+- Download `images`/`GIFs`/`videos`
 - Prevent loading hot posts in trending (by point limit)
 - Multiple page layout options (e.g. hide only social links, hide only sidebar, etc.)
-- Normalize post order
 - Censor emojis ;)
 
 ## Project structure
