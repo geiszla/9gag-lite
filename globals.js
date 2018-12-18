@@ -1,8 +1,11 @@
 /* exported addStylesToDOM, createAsyncApiMethods, defaultOptions */
 
+// Globals: Global variables and functions that are needed for both the options and the content.
+
 'use strict';
 
-// Global variables and functions that are needed for both the options and the content.
+
+/* ----------------------------------------- Variables ------------------------------------------ */
 
 // Default option values
 const defaultOptions = {
@@ -23,7 +26,9 @@ const defaultOptions = {
   isShowVideos: true
 };
 
-// Functions
+
+/* ----------------------------------------- Functions ------------------------------------------ */
+
 function addStylesToDOM(relativePath) {
   const stylesElement = document.createElement('link');
   stylesElement.rel = 'stylesheet';
