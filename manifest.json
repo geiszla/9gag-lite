@@ -5,6 +5,8 @@
     "version": "0.2.0",
     "description": "Change 9gag as you want to work like it should",
 
+    "minimum_chrome_version": "49",
+
     "icons": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",
@@ -37,5 +39,4 @@
     "web_accessible_resources": [
       "styles/*"
     ]
-   
   }
