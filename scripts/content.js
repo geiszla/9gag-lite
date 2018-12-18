@@ -90,7 +90,8 @@ function fixPosts(streamElement) {
   for (let i = 0; i < posts.length; i++) {
     if ((!userOptions.isShowImages && posts[i].getElementsByTagName('picture')[0])
       || (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0])
-      || (!userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0])) {
+      || (!userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0])
+      || (userOptions.isHideStandaloneVideos && !posts[i].getElementsByClassName('post-meta')[0])) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);
       i--;
