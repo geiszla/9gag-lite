@@ -13,6 +13,7 @@ const defaultOptions = {
   theme: 'dark',
   isHideAds: true,
   isSimplifyLayout: true,
+  isHideStandaloneVideos: true,
 
   // Posts
   isHotLimit: false,
