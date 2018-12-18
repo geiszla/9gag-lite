@@ -4,6 +4,41 @@
 
 'use strict';
 
+/* --------------------------------- Background script helpers ---------------------------------- */
+
+let clickedElement;
+
+document.addEventListener('contextmenu', ({ target }) => {
+  clickedElement = target;
+});
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message === 'getMediaSources') {
+    const sourceElements = clickedElement.getElementsByTagName('source');
+    const sources = [].map.call(sourceElements, (element) => {
+      let name = element.type.split('/')[1];
+      const url = element.src;
+
+      if (url.includes('svwm.webm')) {
+        name += ' VP8 (older format)';
+      }
+
+      return { name, url };
+    }).sort((first, second) => first.name.localeCompare(second.name));
+
+    downloadFile(sources[0]);
+    console.log(JSON.stringify(sources, null, 2));
+  }
+});
+
+function downloadFile(source) {
+  const link = document.createElement('a');
+  link.download = '';
+  link.href = source.url;
+  console.log(link);
+  link.click();
+}
+
 
 /* ---------------------------------------- Script start ---------------------------------------- */
 

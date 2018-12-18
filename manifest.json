@@ -15,12 +15,18 @@
 
     "permissions": [
       "storage",
-      "tabs"
+      "tabs",
+      "contextMenus"
     ],
 
     "browser_action": {
       "default_title": "9Gag Lite Options",
       "default_popup": "options/options.html"
+    },
+
+    "background": {
+      "scripts": ["scripts/background.js"],
+      "persistent": false
     },
    
     "content_scripts": [{
