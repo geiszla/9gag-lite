@@ -1,157 +1,198 @@
-'use strict'
+/* global addStylesToDOM, createAsyncApiMethods, defaultOptions */
 
-// Option lists
-const booleanOptions = [
-  'isHideAds',
-  'isHotLimit',
-  'isTrendingLimit',
-  'isSimplifyLayout',
-  'isShowImages',
-  'isShowGifs',
-  'isShowVideos'
-];
 
-const stringOptions = [
-  'theme'
-]
+/* -------------------------------------- Global constants -------------------------------------- */
 
-const intOptions = [
-  'hotLimitValue',
-  'trendingLimitValue'
-]
+const themeSelector = document.getElementById('theme');
+const hideAdsCheckbox = document.getElementById('isHideAds');
+const simplifyLayoutCheckbox = document.getElementById('isSimplifyLayout');
 
-// Set up event listeners
-document.addEventListener('DOMContentLoaded', restoreOptions);
-document.getElementById('save').addEventListener('click', saveOptions);
-document.getElementById('restore').addEventListener('click', restoreDefault);
+const hotLimitCheckbox = document.getElementById('isHotLimit');
+const hotLimitNumberInput = document.getElementById('hotLimitValue');
+const trendingLimitCheckbox = document.getElementById('isTrendingLimit');
+const trendingLimitNumberInput = document.getElementById('trendingLimitValue');
 
-// Set up option elements' behavior
-setupBehavior();
+const themes = Object.freeze({
+  DEFAULT: 'default',
+  DARK: 'dark'
+});
+let previousTheme = themes.DEFAULT;
 
-// Functions
-function setupBehavior() {
-  // Change theme of options window when theme is changed
-  document.getElementById('theme').addEventListener("change", ({ target }) => {
-    changeTheme(target.value);
+const listIds = [];
+
+
+/* -------------------------------------- Setup and start --------------------------------------- */
+
+createAsyncApiMethods(chrome.storage.sync);
+createAsyncApiMethods(chrome.windows);
+createAsyncApiMethods(chrome.tabs);
+
+setupOptions();
+
+
+/* ------------------------------------- Element behaviors -------------------------------------- */
+
+function setupOptions() {
+  // Get current options on page by input type
+  const optionIds = { checkbox: [], text: [], number: [] };
+  [].forEach.call(document.getElementsByTagName('input'), (element) => {
+    optionIds[element.type].push(element.id);
   });
-  
-  // Hide ads option is always enabled when layout is simplified
-  const simplifyLayoutElement = document.getElementById('isSimplifyLayout');
-  document.getElementById('isHideAds').addEventListener('click', ({ target }) => {
-      if (!target.checked) {
-        simplifyLayoutElement.checked = false;
-        simplifyLayoutElement.disabled = true;
-      } else {
-        simplifyLayoutElement.disabled = false;
-      }
-  })
-  simplifyLayoutElement.addEventListener('click', ({ target }) => {
-    if (target.checked) {
-      document.getElementById('isHideAds').checked = true;
-    }
-  })
+
+  [].forEach.call(document.getElementsByTagName('select'), (element) => {
+    optionIds.text.push(element.id);
+  });
+
+  // Add event listeners to buttons
+  document.addEventListener('DOMContentLoaded', () => restoreOptionsAsync(optionIds));
+  document.getElementById('save').addEventListener('click', () => saveOptionsAsync(optionIds));
+  document.getElementById('restore').addEventListener('click',
+    () => restoreDefaultsAsync(optionIds));
+
+  // Check behavior on input change
+  [].forEach.call(document.querySelectorAll('input[type="checkbox"]'), (checkbox) => {
+    checkbox.addEventListener('click', () => checkOptions());
+  });
+
+  // Change theme of options window when theme is changed
+  themeSelector.addEventListener('change', () => { changeTheme(themeSelector.value); });
 }
 
-function saveOptions() {
+function checkOptions() {
+  // Disable checkboxes if they can't be used
+  simplifyLayoutCheckbox.disabled = !hideAdsCheckbox.checked;
+  hotLimitNumberInput.disabled = !hotLimitCheckbox.checked;
+  trendingLimitNumberInput.disabled = !trendingLimitCheckbox.checked;
+
+  changeTheme(themeSelector.value);
+  validateTypeFilter();
+}
+
+/* --------------------------------------- Main functions --------------------------------------- */
+
+async function saveOptionsAsync(optionIds) {
   validateTypeFilter();
 
   // Get option values from the DOM
-  const options = {}
-  booleanOptions.forEach(option => options[option] = document.getElementById(option).checked);
-  stringOptions.forEach(option => options[option] = document.getElementById(option).value);
-  intOptions.forEach(option => options[option] = parseInt(document.getElementById(option).value, 10));
+  const options = {};
+
+  // Boolean
+  optionIds.checkbox.forEach((id) => {
+    options[id] = document.getElementById(id).checked;
+  });
+
+  // String
+  optionIds.text.forEach((id) => {
+    const optionValue = document.getElementById(id).value;
+    options[id] = listIds.includes(id) ? optionValue.split(',').map(element => element.trim())
+      : optionValue;
+  });
+
+  // Number
+  optionIds.number.forEach((id) => {
+    options[id] = parseFloat(document.getElementById(id).value);
+  });
 
   // Save them to chrome sync storage
-  chrome.storage.sync.set(options, () => {
-    const status = document.getElementById('status');
+  await chrome.storage.sync.setAsync(options);
 
-    if (validateNumberInputs()) {
-      status.style.color = '';
-      status.textContent = 'Options saved.';
-    } else {
-      status.style.color = 'orange';
-      status.textContent = 'Options saved (with warnings).';
-    }
-    setTimeout(() => status.textContent = '', 2000);
+  // Set status text
+  const status = document.getElementById('status');
 
-    reloadTabs();
-  });
+  // Set status text and color
+  if (validateNumberInputs()) {
+    status.style.color = '';
+    status.textContent = 'Options saved';
+  } else {
+    status.style.color = 'orange';
+    status.textContent = 'Options saved (with warnings)';
+  }
+  setTimeout(() => { status.textContent = ''; }, 2000);
+
+  reloadTabsAsync();
 }
 
-function restoreOptions() {
-  // Get options from chrome sync storage
-  chrome.storage.sync.get(defaultOptions, items => {
-    // Apply boolean options (to checked property)
-    booleanOptions.forEach(option => document.getElementById(option).checked = items[option]);
-
-    // Apply string and int options (to value property)
-    const valueOptions = stringOptions.concat(intOptions);
-    valueOptions.forEach(option => document.getElementById(option).value = items[option]);
-
-    changeTheme(items.theme);
-  });
-}
-
-function restoreDefault() {
-  const isContinueRestore = confirm('Do you want to restore all options to their default value?');
+async function restoreDefaultsAsync(optionIds) {
+  const confirmText = 'Do you want to restore all options to their default value?';
+  const isContinueRestore = window.confirm(confirmText);
 
   if (isContinueRestore === true) {
-    // Set chrome sync storage with default values
-    chrome.storage.sync.set(defaultOptions, () => {
-      restoreOptions();
-      simplifyLayoutElement.disabled = false;
-
-      const status = document.getElementById('status');
-      status.textContent = 'Defaults restored.';
-      setTimeout(() => status.textContent = '', 2000);
-
-      reloadTabs();
+    const restoredOptions = {};
+    // Only restore options on the current page (either popup or more options page)
+    Object.keys(defaultOptions).forEach((option) => {
+      if (Object.keys(optionIds).some(id => optionIds[id].includes(option))) {
+        restoredOptions[option] = defaultOptions[option];
+      }
     });
+
+    // Set chrome sync storage with default values
+    await chrome.storage.sync.setAsync(restoredOptions);
+    restoreOptionsAsync(optionIds);
+
+    // Set status text
+    const status = document.getElementById('status');
+    status.textContent = 'Defaults restored.';
+    setTimeout(() => { status.textContent = ''; }, 2000);
+
+    reloadTabsAsync();
   }
 }
 
-// Helper functions
-function reloadTabs() {
-  chrome.tabs.query({url: '*://*.9gag.com/*'}, matchingTabs => {
-    matchingTabs.forEach(matchingTab => chrome.tabs.reload(matchingTab.id));
+async function restoreOptionsAsync(optionIds) {
+  // Get options from chrome sync storage
+  const items = await chrome.storage.sync.getAsync(defaultOptions);
+
+  // Apply boolean options (to "checked" property)
+  optionIds.checkbox.forEach((option) => {
+    document.getElementById(option).checked = items[option];
   });
+
+  // Apply string and number options (to "value" property)
+  const valueOptions = optionIds.text.concat(optionIds.number);
+  valueOptions.forEach((option) => {
+    const optionValue = listIds.includes(option) ? items[option].join(', ') : items[option];
+    document.getElementById(option).value = optionValue;
+  });
+
+  checkOptions(items);
 }
 
-function changeTheme(theme) {
-  const addedStyles = document.getElementsByClassName('9gag-lite-style');
 
-  Array.prototype.forEach.call(addedStyles, styleElement => styleElement.remove());
-
-  if (theme !== 'default') {
-    addStylesToDOM(`styles/${theme}/theme.css`);
-    addStylesToDOM(`styles/${theme}/options.css`);
-  }
-}
+/* -------------------------------------- Helper functions -------------------------------------- */
 
 function validateNumberInputs() {
   const numberInputElements = document.querySelectorAll('input[type="number"]');
 
   let isAllValid = true;
-  Array.prototype.forEach.call(numberInputElements, inputElement => {
-    const isElementChecked = (inputElement.id === 'hotLimitValue'
-      && document.getElementById('isHotLimit').checked)
-      || (inputElement.id === 'trendingLimitValue'
-      && document.getElementById('isTrendingLimit').checked);
+  Array.prototype.forEach.call(numberInputElements, (inputElement) => {
+    const isElementChecked = (inputElement.id === 'hotLimitValue' && hotLimitCheckbox.checked)
+      || (inputElement.id === 'trendingLimitValue' && trendingLimitCheckbox.checked);
 
-    const isValueValid = inputElement.max && parseInt(inputElement.value, 10) <= inputElement.max
-      || inputElement.min && parseInt(inputElement.value, 10) >= inputElement.min;
+    if (isElementChecked) {
+      let isValueValid;
+      if (inputElement.min) {
+        const minValue = parseInt(inputElement.min, 10);
+        isValueValid = parseInt(inputElement.value, 10) >= minValue;
+      }
 
-    if (isElementChecked && !isValueValid) {
-        showWarning(true, inputElement);
+      if (inputElement.max) {
+        const maxValue = parseInt(inputElement.max, 10);
+        isValueValid = parseInt(inputElement.value, 10) <= maxValue;
+      }
+
+      if (!isValueValid) {
         isAllValid = false;
-    } else {
-      showWarning(false, inputElement);
+        showWarning(true, inputElement);
+      } else {
+        showWarning(false, inputElement);
+      }
     }
   });
 
   return isAllValid;
 }
 
+/* eslint no-param-reassign: 0 */
 function showWarning(isWarning, targetElement) {
   if (isWarning) {
     targetElement.style.backgroundColor = 'orange';
@@ -168,4 +209,45 @@ function validateTypeFilter() {
   if (!showImagesElement.checked && !showGifsElement.checked && !showVideosElement.checked) {
     showImagesElement.checked = true;
   }
+}
+
+function changeTheme(theme) {
+  if (theme === previousTheme) {
+    return;
+  }
+
+  // Remove existing styles
+  const addedStyles = document.getElementsByClassName('9gag-lite-style');
+  Array.prototype.forEach.call(addedStyles, styleElement => styleElement.remove());
+
+  // Apply correct style
+  if (theme !== 'default') {
+    addStylesToDOM(`styles/${theme}/theme.css`);
+    addStylesToDOM(`styles/${theme}/options.css`);
+  }
+
+  previousTheme = theme;
+}
+
+async function reloadTabsAsync() {
+  const activeTabs = await chrome.tabs.queryAsync({ lastFocusedWindow: true, active: true });
+  const currentTab = activeTabs[0];
+
+  const windows = await chrome.windows.getAllAsync({ populate: true });
+
+  let enabledTabs = [];
+  windows.forEach((window) => {
+    const currentEnabledTabs = window.tabs.filter((tab) => {
+      // Don't reload current extension tab
+      const isCurrentTab = currentTab && currentTab.id === tab.id;
+      const tabUrl = new URL(tab.url);
+
+      return tabUrl.hostname.includes('9gag.com')
+        || (!isCurrentTab && tab.url.includes(`chrome-extension://${chrome.runtime.id}`));
+    });
+
+    enabledTabs = enabledTabs.concat(currentEnabledTabs);
+  });
+
+  enabledTabs.forEach((tab) => { chrome.tabs.reload(tab.id); });
 }

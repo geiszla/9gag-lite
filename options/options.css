@@ -1,18 +1,52 @@
 body {
-    width: 325px;
     margin: 20px 20px 0 20px;
+    width: 325px;
+}
+
+button {
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #d6d6d6;
+    cursor: pointer;
+    user-select: none;
+}
+
+button:hover {
+    background-color: #e8e8e8;
+}
+
+.title {
+    margin: 15px 0 10px 0;
 }
 
 .option {
     margin-top: 10px;
 }
 
-.option-title {
-    margin-top: 20px;
+.option.text {
+    margin-left: 5px;
 }
 
-.indented-option {
+.option.indented {
     margin-left: 20px;
+}
+
+.option.inline {
+    position: relative;
+    top: 3px;
+    margin-right: 0;
+}
+
+.option > label {
+    position: relative;
+    top: -2px;
+    white-space: normal;
+}
+
+.option-title {
+    margin-top: 20px;
 }
 
 .option-label {
@@ -23,22 +57,42 @@ body {
     margin-bottom: 20px;
 }
 
+.text-input {
+    margin: 8px 0 0;
+    width: 290px;
+    padding: 5px;
+}
+
+.indented {
+    margin-left: 24px;
+}
+
+.text-input.indented {
+    width: 260px;
+}
+
 .number-input {
     width: 50px;
 }
 
 .number-input::-webkit-inner-spin-button,
 .number-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    -webkit-appearance: none;
 }
 
 #status {
+    margin-top: 5px;
     height: 10px;
-    margin-top: 8px;
     color: green;
 }
 
 #save {
-    margin: 15px 15px 20px 0;
+    margin: 15px 10px 20px 0;
+}
+
+#more {
+    position: relative;
+    top: 15px;
+    float: right;
 }
