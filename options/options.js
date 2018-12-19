@@ -1,4 +1,4 @@
-/* global addStylesToDOM, createAsyncApiMethods, defaultOptions */
+/* global addStylesToDOM, createAsyncApiMethods, defaultOptions, reloadTabs */
 
 
 /* -------------------------------------- Global constants -------------------------------------- */
@@ -116,7 +116,7 @@ async function saveOptionsAsync(optionIds) {
   }
   setTimeout(() => { status.textContent = ''; }, 2000);
 
-  reloadTabsAsync();
+  reloadTabs();
 }
 
 async function restoreDefaultsAsync(optionIds) {
@@ -141,7 +141,7 @@ async function restoreDefaultsAsync(optionIds) {
     status.textContent = 'Defaults restored.';
     setTimeout(() => { status.textContent = ''; }, 2000);
 
-    reloadTabsAsync();
+    reloadTabs();
   }
 }
 
@@ -234,27 +234,4 @@ function changeTheme(theme) {
   }
 
   previousTheme = theme;
-}
-
-async function reloadTabsAsync() {
-  const activeTabs = await chrome.tabs.queryAsync({ lastFocusedWindow: true, active: true });
-  const currentTab = activeTabs[0];
-
-  const windows = await chrome.windows.getAllAsync({ populate: true });
-
-  let enabledTabs = [];
-  windows.forEach((window) => {
-    const currentEnabledTabs = window.tabs.filter((tab) => {
-      // Don't reload current extension tab
-      const isCurrentTab = currentTab && currentTab.id === tab.id;
-      const tabUrl = new URL(tab.url);
-
-      return tabUrl.hostname.includes('9gag.com')
-        || (!isCurrentTab && tab.url.includes(`chrome-extension://${chrome.runtime.id}`));
-    });
-
-    enabledTabs = enabledTabs.concat(currentEnabledTabs);
-  });
-
-  enabledTabs.forEach((tab) => { chrome.tabs.reload(tab.id); });
 }

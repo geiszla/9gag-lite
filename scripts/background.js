@@ -1,8 +1,13 @@
-/* global createAsyncApiMethods */
+/* global createAsyncApiMethods, reloadTabs */
 
 'use strict';
 
+
+/* ------------------------------------------- Setup -------------------------------------------- */
+
+reloadTabs();
 createAsyncApiMethods(chrome.tabs);
+
 
 /* --------------------------------------- Context menus ---------------------------------------- */
 
