@@ -12,11 +12,11 @@ const hotLimitNumberInput = document.getElementById('hotLimitValue');
 const trendingLimitCheckbox = document.getElementById('isTrendingLimit');
 const trendingLimitNumberInput = document.getElementById('trendingLimitValue');
 
-const themes = Object.freeze({
+const Theme = Object.freeze({
   DEFAULT: 'default',
   DARK: 'dark'
 });
-let previousTheme = themes.DEFAULT;
+let previousTheme = Theme.DEFAULT;
 
 const listIds = [];
 

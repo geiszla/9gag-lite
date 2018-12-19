@@ -29,8 +29,8 @@ function getMediaSource() {
   if (isImage) {
     // If it's an image, add its source URL to the sources...
     if (clickedElement.src) {
-      const currentFormat = new URL(clickedElement.src).pathname.split('.').pop();
-      sources.push({ url: clickedElement.src, format: currentFormat });
+      const mediaFormat = new URL(clickedElement.src).pathname.split('.').pop();
+      sources.push({ url: clickedElement.src, format: mediaFormat });
     }
 
     // ...and set sources to its sibling source elements
@@ -57,11 +57,34 @@ function getMediaSource() {
     : userOptions.downloadVideoFormat;
   const mediaSource = sources.find(source => source.format === preferredFormat) || sources[0];
 
-  return mediaSource;
+  // Change file name to include date, and post type
+  let name;
+  if (userOptions.isChangeFileName) {
+    const date = new Date();
+    const dateString = date.getFullYear().toString().substr(-2)
+    + date.getMonth().toString().padStart(2, '0')
+    + date.getDay().toString().padStart(2, '0');
+
+    const postElement = clickedElement.closest('article');
+    const postType = getPostType(postElement);
+    const postId = postElement.id.split('-').pop();
+    const mediaFormat = new URL(mediaSource.url).pathname.split('.').pop();
+
+    name = `${dateString}_${postType}_${postId}.${mediaFormat}`;
+  }
+
+  return { ...mediaSource, name };
 }
 
 
 /* ---------------------------------------- Script start ---------------------------------------- */
+
+const PostType = Object.freeze({
+  IMAGE: 'image',
+  GIF: 'gif',
+  VIDEO: 'video',
+  STANDALONE_VIDEO: 'stanalonevideo'
+});
 
 // Set up observer for script to run after AJAX page load
 const pageLoadObserver = new MutationObserver((mutationsList) => {
@@ -109,10 +132,12 @@ function fixPosts(streamElement) {
 
   // Filter post types
   for (let i = 0; i < posts.length; i++) {
-    if ((!userOptions.isShowImages && posts[i].getElementsByTagName('picture')[0])
-      || (!userOptions.isShowGifs && posts[i].getElementsByClassName('gif-post')[0])
-      || (!userOptions.isShowVideos && posts[i].getElementsByClassName('video-post')[0])
-      || (userOptions.isHideStandaloneVideos && !posts[i].getElementsByClassName('post-meta')[0])) {
+    const postType = getPostType(posts[i]);
+
+    if ((!userOptions.isShowImages && postType === PostType.IMAGE)
+      || (!userOptions.isShowGifs && postType === PostType.GIF)
+      || (!userOptions.isShowVideos && postType === PostType.VIDEO)
+      || (userOptions.isHideStandaloneVideos && postType === PostType.STANDALONE_VIDEO)) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);
       i--;
@@ -145,4 +170,21 @@ function hidePostsOutOfLimit(posts, pointLimit) {
       }
     }
   });
+}
+
+
+/* -------------------------------------- Helper functions -------------------------------------- */
+
+function getPostType(post) {
+  if (post.getElementsByTagName('picture')[0]) {
+    return PostType.IMAGE;
+  } if (post.getElementsByClassName('gif-post')[0]) {
+    return PostType.GIF;
+  } if (post.getElementsByClassName('video-post')[0]) {
+    return PostType.VIDEO;
+  } if (!post.getElementsByClassName('post-meta')[0]) {
+    return PostType.STANDALONE_VIDEO;
+  }
+
+  return PostType.IMAGE;
 }

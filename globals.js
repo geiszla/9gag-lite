@@ -28,7 +28,8 @@ const defaultOptions = {
 
   // Download format
   downloadImageFormat: 'jpg',
-  downloadVideoFormat: 'mp4'
+  downloadVideoFormat: 'mp4',
+  isChangeFileName: true
 };
 
 

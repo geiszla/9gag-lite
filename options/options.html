@@ -72,10 +72,10 @@
         </div>
 
 
-        <h3 class="title">Download format</h3>
+        <h3 class="title">Downloads</h3>
 
         <div class="option text">
-            <label for="downloadImageFormat" class="option-label">Image:</label>
+            <label for="downloadImageFormat" class="option-label">Image format:</label>
             <select id="downloadImageFormat">
                 <option value="jpg" selected>JPG</option>
                 <option value="webp">WebP</option>
@@ -83,12 +83,17 @@
         </div>
 
         <div class="option text">
-            <label for="downloadVideoFormat" class="option-label">Video:</label>
+            <label for="downloadVideoFormat" class="option-label">GIF/Video format:</label>
             <select id="downloadVideoFormat">
                 <option value="mp4" selected>MP4</option>
                 <option value="webmVp9">WebM (VP9)</option>
                 <option value="webmVp8">WebM (VP8, older)</option>
             </select>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isChangeFileName"/>
+            <label for="isChangeFileName">Include date and post type in filename</label>
         </div>
     </div>
 
