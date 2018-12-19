@@ -12,31 +12,52 @@ document.addEventListener('contextmenu', ({ target }) => {
   clickedElement = target;
 });
 
-chrome.runtime.onMessage.addListener((message) => {
-  if (message === 'getMediaSources') {
-    const sourceElements = clickedElement.getElementsByTagName('source');
-    const sources = [].map.call(sourceElements, (element) => {
-      let name = element.type.split('/')[1];
-      const url = element.src;
-
-      if (url.includes('svwm.webm')) {
-        name += ' VP8 (older format)';
-      }
-
-      return { name, url };
-    }).sort((first, second) => first.name.localeCompare(second.name));
-
-    downloadFile(sources[0]);
-    console.log(JSON.stringify(sources, null, 2));
+chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
+  if (message === 'getMediaSource') {
+    // Get source url and the format of the clicked media
+    const mediaSource = getMediaSource();
+    sendResponse(mediaSource);
   }
 });
 
-function downloadFile(source) {
-  const link = document.createElement('a');
-  link.download = '';
-  link.href = source.url;
-  console.log(link);
-  link.click();
+function getMediaSource() {
+  const sources = [];
+
+  let sourceElements = clickedElement.getElementsByTagName('source');
+  const isImage = sourceElements.length === 0;
+
+  if (isImage) {
+    // If it's an image, add its source URL to the sources...
+    if (clickedElement.src) {
+      const currentFormat = new URL(clickedElement.src).pathname.split('.').pop();
+      sources.push({ url: clickedElement.src, format: currentFormat });
+    }
+
+    // ...and set sources to its sibling source elements
+    sourceElements = clickedElement.parentNode.getElementsByTagName('source');
+  }
+
+  // Iterate through the source elements and parse the sources from them
+  [].forEach.call(sourceElements, (element) => {
+    let format = element.type.split('/')[1];
+    const url = element.src || element.srcset;
+
+    // If it's a webm, add the correct sub-format string at the end
+    if (url.includes('svwm.webm')) {
+      format += 'Vp8';
+    } else if (url.includes('svvp9.webm')) {
+      format += 'Vp9';
+    }
+
+    sources.push({ url, format });
+  });
+
+  // Get the preferred format from user options and select the correct source based on that
+  const preferredFormat = isImage ? userOptions.downloadImageFormat
+    : userOptions.downloadVideoFormat;
+  const mediaSource = sources.find(source => source.format === preferredFormat) || sources[0];
+
+  return mediaSource;
 }
 
 
@@ -84,7 +105,7 @@ function initialize() {
 }
 
 function fixPosts(streamElement) {
-  const posts = Array.from(streamElement.querySelectorAll('article[id^="jsid-post-"]'));
+  const posts = Array.from(streamElement.getElementsByTagName('article'));
 
   // Filter post types
   for (let i = 0; i < posts.length; i++) {

@@ -1,13 +1,32 @@
+/* global createAsyncApiMethods */
+
 'use strict';
 
-chrome.contextMenus.create({
-  id: 'download',
-  title: 'Download Post',
-  contexts: ['image', 'video']
-});
-chrome.contextMenus.onClicked.addListener(downloadPost);
+createAsyncApiMethods(chrome.tabs);
 
-function downloadPost() {
-  chrome.tabs.query({ currentWindow: true, active: true },
-    tabs => chrome.tabs.sendMessage(tabs[0].id, 'getMediaSources'));
+/* --------------------------------------- Context menus ---------------------------------------- */
+
+chrome.contextMenus.create({
+  id: 'downloadImage',
+  title: 'Download image',
+  contexts: ['image']
+});
+chrome.contextMenus.onClicked.addListener(downloadPostAsync);
+
+chrome.contextMenus.create({
+  id: 'downloadVideo',
+  title: 'Download video',
+  contexts: ['video']
+});
+chrome.contextMenus.onClicked.addListener(downloadPostAsync);
+
+
+/* ----------------------------------------- Functions ------------------------------------------ */
+
+
+async function downloadPostAsync() {
+  const tabs = await chrome.tabs.queryAsync({ currentWindow: true, active: true });
+  const mediaSource = await chrome.tabs.sendMessageAsync(tabs[0].id, 'getMediaSource');
+
+  chrome.downloads.download({ url: mediaSource.url });
 }

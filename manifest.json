@@ -16,7 +16,8 @@
     "permissions": [
       "storage",
       "tabs",
-      "contextMenus"
+      "contextMenus",
+      "downloads"
     ],
 
     "browser_action": {
@@ -25,21 +26,21 @@
     },
 
     "background": {
-      "scripts": ["scripts/background.js"],
+      "scripts": ["globals.js", "scripts/background.js"],
       "persistent": false
     },
    
     "content_scripts": [{
-      "js": [ "globals.js", "scripts/setup.js" ],
+      "js": ["globals.js", "scripts/setup.js"],
       "run_at": "document_start",
-      "matches": [ "*://*.9gag.com/*" ]
+      "matches": ["*://*.9gag.com/*"]
     }, {
-      "js": [ "scripts/content.js" ],
+      "js": ["scripts/content.js"],
       "run_at": "document_end",
-      "matches": [ "*://*.9gag.com/*" ]
+      "matches": ["*://*.9gag.com/*"]
     }, {
-      "js": [ "scripts/fixup.js" ],
-      "matches": [ "*://*.9gag.com/*" ]
+      "js": ["scripts/fixup.js"],
+      "matches": ["*://*.9gag.com/*"]
     }],
 
     "web_accessible_resources": [

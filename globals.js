@@ -24,7 +24,11 @@ const defaultOptions = {
   // Post types
   isShowImages: true,
   isShowGifs: true,
-  isShowVideos: true
+  isShowVideos: true,
+
+  // Download format
+  downloadImageFormat: 'jpg',
+  downloadVideoFormat: 'mp4'
 };
 
 
