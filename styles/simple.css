@@ -5,6 +5,10 @@
     display: none;
 }
 
+#jsid-header-darkmode-btn {
+    display: none;
+}
+
 
 /* Left sidebar */
 .stealthy-scroll-container section[class=""] {
