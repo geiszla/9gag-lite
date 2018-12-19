@@ -50,13 +50,13 @@ function setupOptions() {
     }
   });
 
-  // Add event listeners to buttons
+  // Add event listeners
   document.addEventListener('DOMContentLoaded', () => restoreOptionsAsync(optionIds));
   document.getElementById('save').addEventListener('click', () => saveOptionsAsync(optionIds));
   document.getElementById('restore').addEventListener('click',
     () => restoreDefaultsAsync(optionIds));
 
-  // Check behavior on input change
+  // Check behavior on checkbox state change
   [].forEach.call(document.querySelectorAll('input[type="checkbox"]'), (checkbox) => {
     checkbox.addEventListener('click', () => checkOptions());
   });
@@ -103,10 +103,9 @@ async function saveOptionsAsync(optionIds) {
   // Save them to chrome sync storage
   await chrome.storage.sync.setAsync(options);
 
-  // Set status text
+  // Set status text and color
   const status = document.getElementById('status');
 
-  // Set status text and color
   if (validateNumberInputs()) {
     status.style.color = '';
     status.textContent = 'Options saved';
@@ -175,13 +174,16 @@ function validateNumberInputs() {
     const isElementChecked = (inputElement.id === 'hotLimitValue' && hotLimitCheckbox.checked)
       || (inputElement.id === 'trendingLimitValue' && trendingLimitCheckbox.checked);
 
+    // If option is enabled
     if (isElementChecked) {
       let isValueValid;
+      // Check minimum of number input
       if (inputElement.min) {
         const minValue = parseInt(inputElement.min, 10);
         isValueValid = parseInt(inputElement.value, 10) >= minValue;
       }
 
+      // Check maximumof number input
       if (inputElement.max) {
         const maxValue = parseInt(inputElement.max, 10);
         isValueValid = parseInt(inputElement.value, 10) <= maxValue;
@@ -213,6 +215,7 @@ function validateTypeFilter() {
   const showGifsElement = document.getElementById('isShowGifs');
   const showVideosElement = document.getElementById('isShowVideos');
 
+  // At least one must be checked
   if (!showImagesElement.checked && !showGifsElement.checked && !showVideosElement.checked) {
     showImagesElement.checked = true;
   }

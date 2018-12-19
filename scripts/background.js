@@ -30,8 +30,8 @@ chrome.contextMenus.onClicked.addListener(downloadPostAsync);
 
 
 async function downloadPostAsync() {
-  const tabs = await chrome.tabs.queryAsync({ currentWindow: true, active: true });
-  const mediaSource = await chrome.tabs.sendMessageAsync(tabs[0].id, 'getMediaSource');
+  const currentTabs = await chrome.tabs.queryAsync({ currentWindow: true, active: true });
+  const mediaSource = await chrome.tabs.sendMessageAsync(currentTabs[0].id, 'getMediaSource');
 
   chrome.downloads.download({ url: mediaSource.url });
 }
