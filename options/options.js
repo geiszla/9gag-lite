@@ -43,6 +43,13 @@ function setupOptions() {
     optionIds.text.push(element.id);
   });
 
+  // Save options on enter
+  document.addEventListener('keypress', ({ code }) => {
+    if (code === 'Enter') {
+      saveOptionsAsync(optionIds);
+    }
+  });
+
   // Add event listeners to buttons
   document.addEventListener('DOMContentLoaded', () => restoreOptionsAsync(optionIds));
   document.getElementById('save').addEventListener('click', () => saveOptionsAsync(optionIds));
