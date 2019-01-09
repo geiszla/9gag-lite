@@ -143,13 +143,11 @@ function fixPosts(streamElement) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);
       i--;
-    } else if ((userOptions.isShowVideoDuration && postType === PostType.VIDEO)
-      || (userOptions.isShowGIFDuration && postType === PostType.GIF)) {
+    } else {
       const videoElement = posts[i].getElementsByTagName('video')[0];
 
       if (videoElement) {
-        videoElement.addEventListener('loadedmetadata',
-          () => addVideoDuration(videoElement, posts[i]));
+        fixVideo(videoElement, posts[i], postType);
       }
     }
   }
@@ -163,6 +161,36 @@ function fixPosts(streamElement) {
   } else if (userOptions.isTrendingLimit && currentUrl.includes('/trending')) {
     // TRENDING page: Remove posts with less points than limit
     hidePostsOutOfLimit(posts, userOptions.trendingLimitValue);
+  }
+}
+
+function fixVideo(videoElement, post, postType) {
+  // Add video duration to the title
+  if ((userOptions.isShowGIFDuration && postType === PostType.GIF)
+    || (userOptions.isShowVideoDuration && postType === PostType.VIDEO)) {
+    videoElement.addEventListener('loadedmetadata', () => addVideoDuration(videoElement, post));
+  }
+
+  // Don't autoplay videos
+  if ((userOptions.isPreventGIFAutoplay && postType === PostType.GIF)
+    || (userOptions.isPreventVideoAutoplay && postType === PostType.VIDEO)) {
+    let isVideoClicked = false;
+
+    videoElement.addEventListener('playing', () => {
+      if (!isVideoClicked) {
+        videoElement.pause();
+
+        videoElement.addEventListener('click', () => {
+          // After click, it should play as normal and don't pause again
+          isVideoClicked = true;
+          if (postType === PostType.VIDEO) {
+            // Videos don't start by default when user clicks on it,
+            // so we need to start it ourselves
+            videoElement.play();
+          }
+        });
+      }
+    });
   }
 }
 

@@ -14,8 +14,6 @@ const defaultOptions = {
   isHideAds: true,
   isSimplifyLayout: true,
   isHideStandaloneVideos: true,
-  isShowGIFDuration: false,
-  isShowVideoDuration: true,
 
   // Posts
   isHotLimit: false,
@@ -31,7 +29,13 @@ const defaultOptions = {
   // Download format
   downloadImageFormat: 'jpg',
   downloadVideoFormat: 'mp4',
-  isChangeFileName: true
+  isChangeFileName: true,
+
+  // GIFs and Videos
+  isShowGIFDuration: false,
+  isShowVideoDuration: true,
+  isPreventGIFAutoplay: false,
+  isPreventVideoAutoplay: true
 };
 
 
