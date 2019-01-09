@@ -5,7 +5,7 @@
 
 /* ------------------------------------------- Setup -------------------------------------------- */
 
-reloadTabs();
+reloadTabs(false);
 createAsyncApiMethods(chrome.tabs);
 createContextMenus();
 

@@ -14,10 +14,10 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 - Limit posts on hot and trending page by number of points
 - Choose which type of posts to see (`images`/`GIFs`/`videos`)
 - Download `images`/`GIFs`/`videos`
+- Show length of videos and GIFs
 
 ### Planned
 
-- Show length of videos and GIFs
 - Normalize post order
 - Stop autoplaying `GIFs`/`videos`
 - Prevent loading hot posts in trending (by point limit)

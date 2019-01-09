@@ -1,6 +1,6 @@
 /* exported addStylesToDOM, createAsyncApiMethods, defaultOptions, reloadTabs */
 
-// Globals: Global variables and functions that are needed for both the options and the content.
+// Global: Global variables and functions that are needed for both the options and the content.
 
 'use strict';
 
@@ -14,6 +14,7 @@ const defaultOptions = {
   isHideAds: true,
   isSimplifyLayout: true,
   isHideStandaloneVideos: true,
+  isShowGIFDuration: false,
   isShowVideoDuration: true,
 
   // Posts
@@ -36,7 +37,7 @@ const defaultOptions = {
 
 /* ----------------------------------------- Functions ------------------------------------------ */
 
-async function reloadTabs() {
+function reloadTabs(isFromPopup) {
   chrome.tabs.query({ lastFocusedWindow: true, active: true }, (activeTabs) => {
     const currentTab = activeTabs[0];
 
@@ -45,12 +46,12 @@ async function reloadTabs() {
 
       windows.forEach((window) => {
         const currentEnabledTabs = window.tabs.filter((tab) => {
-        // Don't reload current extension tab
-          const isCurrentTab = currentTab && currentTab.id === tab.id;
+          // Don't reload current extension tab
+          const isCurrentTab = !isFromPopup && currentTab && currentTab.id === tab.id;
           const tabUrl = new URL(tab.url);
 
           return tabUrl.hostname.includes('9gag.com')
-          || (!isCurrentTab && tab.url.includes(`chrome-extension://${chrome.runtime.id}`));
+            || (!isCurrentTab && tab.url.includes(`chrome-extension://${chrome.runtime.id}`));
         });
 
         enabledTabs = enabledTabs.concat(currentEnabledTabs);

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>9Gag Lite Options</title>
+    <link rel="stylesheet" type="text/CSS" href="common.css">
+</head>
+
+<body>
+    <div id="options">
+        <h3 class='title'>Personalization</h3>
+
+        <div class="option text">
+            <label for="theme" class="option-label">Theme:</label>
+            <select name="theme" id="theme">
+                <option value="default">Default</option>
+                <option value="dark" selected>Dark</option>
+            </select>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isHideAds" />
+            <label for="isHideAds">
+                Hide ads and
+                <input type="checkbox" id="isSimplifyLayout" class="option inline" />
+                <label for="isSimplifyLayout">simplify layout</label>
+            </label>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isHideStandaloneVideos" />
+            <label for="isHideStandaloneVideos">Hide standalone videos</label>
+        </div>
+
+        <h3 class='title'>Posts</h3>
+    
+        <div class="option">
+            <input type="checkbox" id="isHotLimit" />
+            <label for="isHotLimit">
+                Limit <b>hot</b> page to posts with
+                <input type="number" id="hotLimitValue" class="number-input" max="10000" />
+                points.
+            </label>
+        </div>
+    
+        <div class="option">
+            <input type="checkbox" id="isTrendingLimit" />
+            <label for="isTrendingLimit">
+                Limit <b>trending</b> page to posts with
+                <input type="number" id="trendingLimitValue" class="number-input" max="5000" />
+                points.
+            </label>
+        </div>
+
+
+        <h3 class="title">Post types to display (at least one)</h3>
+
+        <div class="option">
+            <input type="checkbox" id="isShowImages" />
+            <label for="isShowImages">Images</label>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isShowGifs" />
+            <label for="isShowGifs">GIFs</label>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isShowVideos"/>
+            <label for="isShowVideos">Videos</label>
+        </div>
+
+
+        <h3 class="title">Downloads</h3>
+
+        <div class="option text">
+            <label for="downloadImageFormat" class="option-label">Image format:</label>
+            <select id="downloadImageFormat">
+                <option value="jpg" selected>JPG</option>
+                <option value="webp">WebP</option>
+            </select>
+        </div>
+
+        <div class="option text">
+            <label for="downloadVideoFormat" class="option-label">GIF/Video format:</label>
+            <select id="downloadVideoFormat">
+                <option value="mp4" selected>MP4</option>
+                <option value="webmVp9">WebM (VP9)</option>
+                <option value="webmVp8">WebM (VP8, older)</option>
+            </select>
+        </div>
+
+        <div class="option">
+            <input type="checkbox" id="isChangeFileName"/>
+            <label for="isChangeFileName">Change filename to include date and post type</label>
+        </div>
+    </div>
+
+    <div id="status"></div>
+
+    <button id="save">Save</button>
+    <button id="restore">Restore defaults</button>
+
+    <button id="more">More options</button>
+
+    <script src="../global.js"></script>
+    <script type="module" src="common.js"></script>
+    <script type="module" src="options_popup.js"></script>
+</body>
+
+</html>

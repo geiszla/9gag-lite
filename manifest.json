@@ -20,18 +20,20 @@
       "downloads"
     ],
 
+    "options_page": "options/options.html",
+
     "browser_action": {
       "default_title": "9Gag Lite Options",
-      "default_popup": "options/options.html"
+      "default_popup": "options/options_popup.html"
     },
 
     "background": {
-      "scripts": ["globals.js", "scripts/background.js"],
+      "scripts": ["global.js", "scripts/background.js"],
       "persistent": false
     },
    
     "content_scripts": [{
-      "js": ["globals.js", "scripts/setup.js"],
+      "js": ["global.js", "scripts/setup.js"],
       "run_at": "document_start",
       "matches": ["*://*.9gag.com/*"]
     }, {
