@@ -143,10 +143,14 @@ function fixPosts(streamElement) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);
       i--;
-    } else if (userOptions.isShowVideoDuration
-      && (postType === PostType.VIDEO || postType === PostType.GIF)) {
+    } else if ((userOptions.isShowVideoDuration && postType === PostType.VIDEO)
+      || (userOptions.isShowGIFDuration && postType === PostType.GIF)) {
       const videoElement = posts[i].getElementsByTagName('video')[0];
-      videoElement.addEventListener('loadedmetadata', () => addVideoDuration(videoElement, posts[i]));
+
+      if (videoElement) {
+        videoElement.addEventListener('loadedmetadata',
+          () => addVideoDuration(videoElement, posts[i]));
+      }
     }
   }
 
