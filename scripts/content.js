@@ -62,8 +62,8 @@ function getMediaSource() {
   if (userOptions.isChangeFileName) {
     const date = new Date();
     const dateString = date.getFullYear().toString().substr(-2)
-    + date.getMonth().toString().padStart(2, '0')
-    + date.getDay().toString().padStart(2, '0');
+      + date.getMonth().toString().padStart(2, '0')
+      + date.getDay().toString().padStart(2, '0');
 
     const postElement = clickedElement.closest('article');
     const postType = getPostType(postElement);
@@ -115,13 +115,15 @@ function initialize() {
   if (postListView) {
     // Fix initial post streams
     const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
-    Array.prototype.forEach.call(initialStreamElements, (initialStream) => {
+    [].forEach.call(initialStreamElements, (initialStream) => {
       fixPosts(initialStream);
     });
 
     // Fix streams as they loaded dynamically when page is scrolled
     const streamObserver = new MutationObserver((mutationsList) => {
-      mutationsList.forEach(mutation => fixPosts(mutation.target));
+      mutationsList.forEach((mutation) => {
+        mutation.addedNodes.forEach(fixPosts);
+      });
     });
     streamObserver.observe(postListView, { childList: true });
   }
@@ -141,6 +143,10 @@ function fixPosts(streamElement) {
       posts[i].style.display = 'none';
       posts.splice(i, 1);
       i--;
+    } else if (userOptions.isShowVideoDuration
+      && (postType === PostType.VIDEO || postType === PostType.GIF)) {
+      const videoElement = posts[i].getElementsByTagName('video')[0];
+      videoElement.addEventListener('loadedmetadata', () => addVideoDuration(videoElement, posts[i]));
     }
   }
 
@@ -154,6 +160,16 @@ function fixPosts(streamElement) {
     // TRENDING page: Remove posts with less points than limit
     hidePostsOutOfLimit(posts, userOptions.trendingLimitValue);
   }
+}
+
+function addVideoDuration(videoElement, postElement) {
+  const duration = new Date(0);
+  duration.setSeconds(videoElement.duration);
+
+  const seconds = duration.getSeconds().toString().padStart(2, '0');
+
+  const durationText = ` (${`${duration.getMinutes()}:${seconds}`})`;
+  postElement.querySelector('[data-evt*="PostTitle"]').children[0].textContent += durationText;
 }
 
 /* eslint no-param-reassign: 0 */
@@ -175,16 +191,18 @@ function hidePostsOutOfLimit(posts, pointLimit) {
 
 /* -------------------------------------- Helper functions -------------------------------------- */
 
-function getPostType(post) {
-  if (post.getElementsByTagName('picture')[0]) {
-    return PostType.IMAGE;
-  } if (post.getElementsByClassName('gif-post')[0]) {
-    return PostType.GIF;
-  } if (post.getElementsByClassName('video-post')[0]) {
-    return PostType.VIDEO;
-  } if (!post.getElementsByClassName('post-meta')[0]) {
-    return PostType.STANDALONE_VIDEO;
+function getPostType(postElement) {
+  let postType = PostType.IMAGE;
+
+  if (!postElement.getElementsByClassName('post-meta')[0]) {
+    postType = PostType.STANDALONE_VIDEO;
+  } else if (postElement.getElementsByTagName('picture')[0]) {
+    postType = PostType.IMAGE;
+  } else if (postElement.getElementsByClassName('gif-post')[0]) {
+    postType = PostType.GIF;
+  } else if (postElement.getElementsByClassName('video-post')[0]) {
+    postType = PostType.VIDEO;
   }
 
-  return PostType.IMAGE;
+  return postType;
 }

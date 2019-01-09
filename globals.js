@@ -14,6 +14,7 @@ const defaultOptions = {
   isHideAds: true,
   isSimplifyLayout: true,
   isHideStandaloneVideos: true,
+  isShowVideoDuration: true,
 
   // Posts
   isHotLimit: false,

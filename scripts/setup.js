@@ -1,6 +1,6 @@
 /* global addStylesToDOM, defaultOptions */
 
-// Setup script: Runs after any files from css, but before any other DOM is constructed
+// Setup script: Injected after any files from css, but before any other DOM is constructed
 // or any other script is run
 
 'use strict';

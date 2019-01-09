@@ -170,7 +170,7 @@ function validateNumberInputs() {
   const numberInputElements = document.querySelectorAll('input[type="number"]');
 
   let isAllValid = true;
-  Array.prototype.forEach.call(numberInputElements, (inputElement) => {
+  [].forEach.call(numberInputElements, (inputElement) => {
     const isElementChecked = (inputElement.id === 'hotLimitValue' && hotLimitCheckbox.checked)
       || (inputElement.id === 'trendingLimitValue' && trendingLimitCheckbox.checked);
 
@@ -228,7 +228,7 @@ function changeTheme(theme) {
 
   // Remove existing styles
   const addedStyles = document.getElementsByClassName('9gag-lite-style');
-  Array.prototype.forEach.call(addedStyles, styleElement => styleElement.remove());
+  [].forEach.call(addedStyles, styleElement => styleElement.remove());
 
   // Apply correct style
   if (theme !== 'default') {

@@ -17,9 +17,11 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 
 ### Planned
 
+- Show length of videos and GIFs
 - Normalize post order
 - Stop autoplaying `GIFs`/`videos`
 - Prevent loading hot posts in trending (by point limit)
+- Show OP's name if she/he commented on the post
 - Multiple page layout options (e.g. hide only social links, hide only sidebar, etc.)
 - Censor emojis ;)
 

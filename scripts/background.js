@@ -18,14 +18,16 @@ function createContextMenus() {
   chrome.contextMenus.create({
     id: 'downloadImage',
     title: 'Download image',
-    contexts: ['image']
+    contexts: ['image'],
+    documentUrlPatterns: ['*://*.9gag.com/*']
   });
   chrome.contextMenus.onClicked.addListener(downloadPostAsync);
 
   chrome.contextMenus.create({
     id: 'downloadVideo',
     title: 'Download GIF/video',
-    contexts: ['video']
+    contexts: ['video'],
+    documentUrlPatterns: ['*://*.9gag.com/*']
   });
   chrome.contextMenus.onClicked.addListener(downloadPostAsync);
 }

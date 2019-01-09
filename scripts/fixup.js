@@ -8,6 +8,7 @@
 // Load more posts if the initial streams contain less than what fits on screen
 setTimeout(() => {
   const html = document.documentElement;
+
   if (html.scrollHeight <= html.clientHeight) {
     const { body } = document;
 
