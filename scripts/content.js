@@ -103,14 +103,8 @@ if (postListView) {
 
   pageLoadObserver.observe(postListView, { childList: true });
 
-  // Fix initial post streams
-  const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
-  [].forEach.call(initialStreamElements, (initialStream) => {
-    fixStream(initialStream);
-  });
-
   // Stream #0 won't be readded on page change, only the articles in it change,
-  // therefore we need an observer on the articles themselves
+  // therefore we need an observer on that stream that looks for new articles
   const stream0Observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach((mutation) => {
       mutation.addedNodes.forEach((addedNode) => {
@@ -123,6 +117,12 @@ if (postListView) {
 
   const stream0 = postListView.children[0];
   stream0Observer.observe(stream0, { childList: true, subtree: true });
+
+  // Fix initial post streams
+  const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
+  [].forEach.call(initialStreamElements, (initialStream) => {
+    fixStream(initialStream);
+  });
 }
 
 
