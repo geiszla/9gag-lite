@@ -1,3 +1,6 @@
+/* Contains styles used by both of the options pages */
+
+/* General styles */
 body {
     margin: 20px 20px 0 20px;
     width: 325px;
@@ -17,6 +20,7 @@ button:hover {
     background-color: #e8e8e8;
 }
 
+/* Form inputs */
 .title {
     margin: 15px 0 10px 0;
 }
@@ -27,6 +31,10 @@ button:hover {
 
 .option.text {
     margin-left: 5px;
+}
+
+.option.select {
+    margin-left: 5px;
     margin-top: 15px;
 }
 
@@ -34,16 +42,20 @@ button:hover {
     margin-left: 20px;
 }
 
-.option.inline {
+.inline {
     position: relative;
     top: 3px;
     margin-right: 0;
 }
 
-.option > label {
+.option label {
     position: relative;
     top: -2px;
     white-space: normal;
+}
+
+.inline input {
+    margin-right: 1px;
 }
 
 .option-title {
@@ -82,6 +94,7 @@ button:hover {
     -webkit-appearance: none;
 }
 
+/* Form actions */
 #status {
     margin-top: 5px;
     height: 10px;

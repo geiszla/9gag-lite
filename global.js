@@ -77,8 +77,8 @@ function addStylesToDOM(relativePath) {
 }
 
 /* eslint no-param-reassign: 0 */
-// Add async versions of the chrome API methods to the API object
 function createAsyncApiMethods(functionsObject) {
+  // Add async versions of the chrome API methods to the API object
   Object.keys(functionsObject).forEach((functionName) => {
     if (!functionName.startsWith('on')) {
       functionsObject[`${functionName}Async`] = (...args) => new Promise((resolve) => {

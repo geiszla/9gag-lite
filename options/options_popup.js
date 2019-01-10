@@ -1,8 +1,8 @@
-/* eslint no-param-reassign: 0 */
-
 import { changeTheme, setupOptionsAsync } from './common.js';
 
-// Elements
+
+/* -------------------------------------- Global constants -------------------------------------- */
+
 const themeSelector = document.getElementById('theme');
 const hideAdsCheckbox = document.getElementById('isHideAds');
 const simplifyLayoutCheckbox = document.getElementById('isSimplifyLayout');
@@ -12,17 +12,21 @@ const hotLimitNumberInput = document.getElementById('hotLimitValue');
 const trendingLimitCheckbox = document.getElementById('isTrendingLimit');
 const trendingLimitNumberInput = document.getElementById('trendingLimitValue');
 
-// Set up page
+
+/* ---------------------------------------- Set up page ----------------------------------------- */
+
+setupOptionsAsync(checkBehavior, true);
+
 document.getElementById('more').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
 });
 
-// Change theme of options window when theme is changed
+// Change theme of options window when theme selection is changed
 themeSelector.addEventListener('change', () => { changeTheme(themeSelector.value); });
 
-setupOptionsAsync(checkBehavior, true);
 
-// Functions
+/* ----------------------------------------- Functions ------------------------------------------ */
+
 function checkBehavior(userOptions) {
   // Disable checkboxes if they can't be used
   simplifyLayoutCheckbox.disabled = !hideAdsCheckbox.checked;

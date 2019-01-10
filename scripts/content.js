@@ -4,6 +4,7 @@
 
 'use strict';
 
+
 /* --------------------------------- Background script helpers ---------------------------------- */
 
 let clickedElement;
@@ -144,6 +145,7 @@ function fixPosts(streamElement) {
       posts.splice(i, 1);
       i--;
     } else {
+      // If post is not filtered, do other modifications
       const videoElement = posts[i].getElementsByTagName('video')[0];
 
       if (videoElement) {
@@ -183,9 +185,9 @@ function fixVideo(videoElement, post, postType) {
         videoElement.addEventListener('click', () => {
           // After click, it should play as normal and don't pause again
           isVideoClicked = true;
+
+          // Videos don't start by default when user clicks on it, so we need to start it ourselves
           if (postType === PostType.VIDEO) {
-            // Videos don't start by default when user clicks on it,
-            // so we need to start it ourselves
             videoElement.play();
           }
         });

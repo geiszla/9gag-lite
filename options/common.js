@@ -1,20 +1,28 @@
 /* global addStylesToDOM, createAsyncApiMethods, defaultOptions, reloadTabs */
 
+// Contains scripts used by both of the options pages.
+
 
 /* -------------------------------------- Global constants -------------------------------------- */
+
 const Theme = Object.freeze({
   DEFAULT: 'default',
   DARK: 'dark'
 });
 let previousTheme = Theme.DEFAULT;
 
+// Inputs with lists of items in them separated by commas
 const listIds = [];
+// Maps number input IDs to their corresponding checkbox IDs
 const numberInputCheckboxIds = {
   hotLimitValue: 'isHotLimit',
   trendingLimitValue: 'isTrendingLimit'
 };
 
+// Differentiates the popup options and the options page
 let isPopup = false;
+// Function that contains the behavior of the input elements of the current page
+let checkBehavior = null;
 
 
 /* -------------------------------------- Setup and start --------------------------------------- */
@@ -23,15 +31,14 @@ createAsyncApiMethods(chrome.storage.sync);
 createAsyncApiMethods(chrome.windows);
 createAsyncApiMethods(chrome.tabs);
 
+
 /* ------------------------------------- Exported functions ------------------------------------- */
 
-export async function setupOptionsAsync(checkBehavior, isFromPopup) {
+export async function setupOptionsAsync(currentCheckBehavior, isFromPopup) {
   isPopup = isFromPopup;
+  checkBehavior = currentCheckBehavior;
 
-  // Get user options
   const userOptions = await chrome.storage.sync.getAsync(defaultOptions);
-
-  // Chenage theme of options page if needed
   changeTheme(userOptions.theme);
 
   // Get current options on page by input type
@@ -45,7 +52,12 @@ export async function setupOptionsAsync(checkBehavior, isFromPopup) {
   });
 
   // Restore saved options
-  restoreOptionsAsync(optionIds, checkBehavior);
+  restoreOptionsAsync(optionIds);
+
+  // Add event listeners
+  document.getElementById('save').addEventListener('click', () => saveOptionsAsync(optionIds));
+  document.getElementById('restore').addEventListener('click',
+    () => restoreDefaultsAsync(optionIds));
 
   // Save options on enter
   document.addEventListener('keypress', ({ code }) => {
@@ -53,11 +65,6 @@ export async function setupOptionsAsync(checkBehavior, isFromPopup) {
       saveOptionsAsync(optionIds);
     }
   });
-
-  // Add event listeners
-  document.getElementById('save').addEventListener('click', () => saveOptionsAsync(optionIds));
-  document.getElementById('restore').addEventListener('click',
-    () => restoreDefaultsAsync(optionIds));
 
   // Check behavior on checkbox state change
   [].forEach.call(document.querySelectorAll('input[type="checkbox"]'), (checkbox) => {
@@ -84,6 +91,7 @@ export function changeTheme(theme) {
 
   previousTheme = theme;
 }
+
 
 /* --------------------------------------- Main functions --------------------------------------- */
 
@@ -126,11 +134,10 @@ async function saveOptionsAsync(optionIds) {
   reloadTabs(isPopup);
 }
 
-async function restoreDefaultsAsync(optionIds, checkBehavior) {
+async function restoreDefaultsAsync(optionIds) {
   const confirmText = 'Do you want to restore all options to their default value?';
-  const isContinueRestore = window.confirm(confirmText);
 
-  if (isContinueRestore === true) {
+  if (window.confirm(confirmText) === true) {
     // Set chrome sync storage with default values
     await chrome.storage.sync.setAsync(defaultOptions);
     restoreOptionsAsync(optionIds);
@@ -145,7 +152,7 @@ async function restoreDefaultsAsync(optionIds, checkBehavior) {
   }
 }
 
-async function restoreOptionsAsync(optionIds, checkBehavior) {
+async function restoreOptionsAsync(optionIds) {
   // Get options from chrome sync storage
   const items = await chrome.storage.sync.getAsync(defaultOptions);
 
@@ -177,13 +184,14 @@ function validateNumberInputs() {
     // If option is enabled
     if (numberInputElement.checked) {
       let isValueValid;
+
       // Check minimum of number input
       if (inputElement.min) {
         const minValue = parseInt(inputElement.min, 10);
         isValueValid = parseInt(inputElement.value, 10) >= minValue;
       }
 
-      // Check maximumof number input
+      // Check maximum of number input
       if (inputElement.max) {
         const maxValue = parseInt(inputElement.max, 10);
         isValueValid = parseInt(inputElement.value, 10) <= maxValue;
