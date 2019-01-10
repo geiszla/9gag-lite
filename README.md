@@ -33,7 +33,7 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 
 ## Changelog
 
-### 1.1.2
+### 1.1.2/3
 
 - Bug fixes
 
