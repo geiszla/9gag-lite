@@ -19,11 +19,16 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 
 ### Planned
 
-- Normalize post order
-- Prevent loading hot posts in trending (by point limit)
+- Prevent post preload to save data
+- Zoom into profile pictures when user hovers over them
 - Show OP's name if she/he commented on the post
+- Copy link button under posts
 - Bigger posts
+- Normalize post order
+- Don't show already seen posts
+- Prevent loading hot posts in trending (by point limit)
 - Multiple page layout options (e.g. hide only social links, hide only sidebar, etc.)
+- Favorites
 - Censor emojis ;)
 
 ## Changelog
