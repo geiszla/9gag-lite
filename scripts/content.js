@@ -71,9 +71,14 @@ function getMediaSource() {
   }
 
   // Change file name to include date, and post type
+  const filename = mediaSource.url.split('/').pop();
+
   let name;
-  if (userOptions.isChangeFileName) {
+  if (mediaSource.url.includes('/avatar/')) {
+    name = `${filename.split('.')[0]}_avatar`;
+  } else if (userOptions.isChangeFileName) {
     const date = new Date();
+
     const dateString = date.getFullYear().toString().substr(-2)
       + date.getMonth().toString().padStart(2, '0')
       + date.getDate().toString().padStart(2, '0')
@@ -81,12 +86,15 @@ function getMediaSource() {
       + date.getMinutes().toString().padStart(2, '0')
       + date.getSeconds().toString().padStart(2, '0');
 
-    const postElement = clickedElement.closest('article');
-    const postType = getPostType(postElement);
-    const mediaFormat = new URL(mediaSource.url).pathname.split('.').pop();
-
-    name = `${dateString}_${postType}.${mediaFormat}`;
+    name = dateString;
+    if (!mediaSource.url.includes('/media/')) {
+      const postElement = clickedElement.closest('article');
+      name += `_${getPostType(postElement)}`;
+    }
   }
+
+  const mediaFormat = new URL(mediaSource.url).pathname.split('.').pop();
+  name += `.${mediaFormat}`;
 
   return { ...mediaSource, name };
 }
@@ -279,7 +287,7 @@ function addAvatarTooltip(avatarElement) {
 
         width: auto;
         height: auto;
-        
+
         z-index: 99;
       `;
 
