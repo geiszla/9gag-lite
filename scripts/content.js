@@ -76,7 +76,7 @@ function getMediaSource() {
     const date = new Date();
     const dateString = date.getFullYear().toString().substr(-2)
       + date.getMonth().toString().padStart(2, '0')
-      + date.getDay().toString().padStart(2, '0');
+      + date.getDate().toString().padStart(2, '0');
 
     const postElement = clickedElement.closest('article');
     const postType = getPostType(postElement);
@@ -245,6 +245,11 @@ function hidePostsOutOfLimit(posts, pointLimit) {
 
 function zoomIntoAvatars() {
   const commentContainer = document.querySelector('.comment-box + div');
+
+  if (!commentContainer) {
+    return;
+  }
+
   const avatars = commentContainer.getElementsByClassName('avatar');
 
   // Observe for new comments loading dynamically
