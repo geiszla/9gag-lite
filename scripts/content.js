@@ -71,11 +71,10 @@ function getMediaSource() {
   }
 
   // Change file name to include date, and post type
-  const filename = mediaSource.url.split('/').pop();
-
   let name;
-  if (mediaSource.url.includes('/avatar/')) {
-    name = `${filename.split('.')[0]}_avatar`;
+  if (mediaSource.url.includes('avatar/')) {
+    const username = clickedElement.parentNode.href.split('/').pop();
+    name = `${username}_avatar`;
   } else if (userOptions.isChangeFileName) {
     const date = new Date();
 
