@@ -33,6 +33,10 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 
 ## Changelog
 
+### 1.1.2
+
+- Bug fixes
+
 ### 1.1.1
 
 - Zoom into profile pictures when user hovers over them

@@ -115,7 +115,7 @@ if (containerElement && !window.location.pathname.includes('/u/')) {
   initialize(containerElement);
 }
 
-window.addEventListener('load', zoomIntoAvatars);
+window.addEventListener('load', initializeAvatarZoom);
 
 
 /* --------------------------------------- Main functions --------------------------------------- */
@@ -245,9 +245,8 @@ function hidePostsOutOfLimit(posts, pointLimit) {
 
 /* ----------------------------------- Avatar zoom functions ------------------------------------ */
 
-function zoomIntoAvatars() {
+function initializeAvatarZoom() {
   const commentContainer = document.querySelector('.comment-box + div');
-
   if (!commentContainer) {
     return;
   }
@@ -275,12 +274,12 @@ function addAvatarTooltip(avatarElement) {
   avatarElement.addEventListener('mouseenter', () => {
     const tooltipStyle = `
         position: absolute;
-        top: -18%;
-        left: -18%;
+        top: -2vh;
+        left: -115px;
 
         width: auto;
         height: auto;
-
+        
         z-index: 99;
       `;
 
