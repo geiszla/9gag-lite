@@ -76,14 +76,16 @@ function getMediaSource() {
     const date = new Date();
     const dateString = date.getFullYear().toString().substr(-2)
       + date.getMonth().toString().padStart(2, '0')
-      + date.getDate().toString().padStart(2, '0');
+      + date.getDate().toString().padStart(2, '0')
+      + date.getHours().toString().padStart(2, '0')
+      + date.getMinutes().toString().padStart(2, '0')
+      + date.getSeconds().toString().padStart(2, '0');
 
     const postElement = clickedElement.closest('article');
     const postType = getPostType(postElement);
-    const postId = postElement.id.split('-').pop();
     const mediaFormat = new URL(mediaSource.url).pathname.split('.').pop();
 
-    name = `${dateString}_${postType}_${postId}.${mediaFormat}`;
+    name = `${dateString}_${postType}.${mediaFormat}`;
   }
 
   return { ...mediaSource, name };
