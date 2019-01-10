@@ -16,8 +16,15 @@ document.addEventListener('contextmenu', ({ target }) => {
 chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   if (message === 'getMediaSource') {
     // Get source url and the format of the clicked media
-    const mediaSource = getMediaSource();
-    sendResponse(mediaSource);
+    try {
+      const mediaSource = getMediaSource();
+      sendResponse(mediaSource);
+    } catch (error) {
+      console.log('Media download error:');
+      console.log(error);
+
+      alert('This media cannot be downloaded. You can only download posts.');
+    }
   }
 });
 
@@ -93,35 +100,46 @@ const PostType = Object.freeze({
 });
 
 // Only start post modification, if a list view of posts exists
-const postListView = document.querySelector('[id^="list-view"]');
-if (postListView) {
+const containerElement = document.getElementById('container');
+if (containerElement) {
   // Set up observer for script to run after AJAX page load
-  const pageLoadObserver = new MutationObserver((mutationsList) => {
-    mutationsList.forEach((mutation) => {
-      mutation.addedNodes.forEach((addedNode) => {
-        if (addedNode.className && addedNode.className.includes('list-stream')) {
-          fixStream(addedNode);
-        }
-      });
-    });
-  });
+  createAddObserver(containerElement, (addedNode) => {
+    if (addedNode.className && addedNode.className.includes('main-wrap')) {
+      initialize(containerElement);
+    }
+  }, { childList: true, subtree: true });
 
-  pageLoadObserver.observe(postListView, { childList: true });
+  // Initialize script
+  initialize(containerElement);
+}
+
+window.addEventListener('load', zoomIntoAvatars);
+
+
+/* --------------------------------------- Main functions --------------------------------------- */
+
+function initialize(rootElement) {
+  const postListView = rootElement.querySelector('[id^="list-view"]');
+
+  if (!postListView) {
+    return;
+  }
+
+  // Observe post list for new post streams
+  createAddObserver(postListView, (addedNode) => {
+    if (addedNode.className && addedNode.className.includes('list-stream')) {
+      fixStream(addedNode);
+    }
+  });
 
   // Stream #0 won't be readded on page change, only the articles in it change,
   // therefore we need an observer on that stream that looks for new articles
-  const stream0Observer = new MutationObserver((mutationsList) => {
-    mutationsList.forEach((mutation) => {
-      mutation.addedNodes.forEach((addedNode) => {
-        if (addedNode.tagName === 'ARTICLE') {
-          fixStream(stream0);
-        }
-      });
-    });
-  });
-
   const stream0 = postListView.children[0];
-  stream0Observer.observe(stream0, { childList: true, subtree: true });
+  createAddObserver(stream0, (addedNode) => {
+    if (addedNode.tagName === 'ARTICLE') {
+      fixStream(stream0);
+    }
+  }, { childList: true, subtree: true });
 
   // Fix initial post streams
   const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
@@ -129,9 +147,6 @@ if (postListView) {
     fixStream(initialStream);
   });
 }
-
-
-/* --------------------------------------- Main functions --------------------------------------- */
 
 function fixStream(streamElement) {
   const posts = Array.from(streamElement.getElementsByTagName('article'));
@@ -226,6 +241,58 @@ function hidePostsOutOfLimit(posts, pointLimit) {
 }
 
 
+/* ----------------------------------- Avatar zoom functions ------------------------------------ */
+
+function zoomIntoAvatars() {
+  const commentContainer = document.querySelector('.comment-box + div');
+  const avatars = commentContainer.getElementsByClassName('avatar');
+
+  // Observe for new comments loading dynamically
+  createAddObserver(commentContainer, (addedNode) => {
+    if (addedNode.tagName === 'DIV') {
+      const commentElement = addedNode.getElementsByClassName('avatar');
+      addAvatarTooltip(commentElement[0]);
+    }
+  }, { childList: true });
+
+  // Apply avatar zoom to initial comments
+  [].forEach.call(avatars, addAvatarTooltip);
+}
+
+function addAvatarTooltip(avatarElement) {
+  let tooltip = avatarElement.querySelector('[class="lite-avatar"]');
+
+  avatarElement.addEventListener('mouseenter', () => {
+    const tooltipStyle = `
+        position: absolute;
+        top: -18%;
+        left: -18%;
+
+        width: auto;
+        height: auto;
+
+        z-index: 99;
+      `;
+
+    if (tooltip) {
+      tooltip.style = tooltipStyle;
+    } else {
+      const avatarImage = avatarElement.getElementsByTagName('img')[0];
+
+      tooltip = document.createElement('img');
+      tooltip.src = avatarImage.src;
+      tooltip.className = 'lite-avatar';
+      tooltip.style = tooltipStyle;
+      avatarImage.parentNode.appendChild(tooltip);
+    }
+  });
+
+  avatarElement.addEventListener('mouseleave', () => {
+    tooltip.style = 'display: none';
+  });
+}
+
+
 /* -------------------------------------- Helper functions -------------------------------------- */
 
 function getPostType(postElement) {
@@ -242,4 +309,15 @@ function getPostType(postElement) {
   }
 
   return postType;
+}
+
+function createAddObserver(targetElement, callback, options = { childList: true }) {
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      mutation.addedNodes.forEach((addedNode) => { callback(addedNode); });
+    });
+  });
+  observer.observe(targetElement, options);
+
+  return observer;
 }
