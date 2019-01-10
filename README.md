@@ -15,15 +15,31 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 - Choose which type of posts to see (`images`/`GIFs`/`videos`)
 - Download `images`/`GIFs`/`videos`
 - Show length of videos and GIFs
+- Prevent autoplaying `GIFs`/`videos`
 
 ### Planned
 
 - Normalize post order
-- Stop autoplaying `GIFs`/`videos`
 - Prevent loading hot posts in trending (by point limit)
 - Show OP's name if she/he commented on the post
 - Multiple page layout options (e.g. hide only social links, hide only sidebar, etc.)
 - Censor emojis ;)
+
+## Changelog
+
+### 1.1.0
+
+- Download `images`/`GIFs`/`videos`
+- Show length of videos and GIFs
+- Prevent autoplaying `GIFs`/`videos`
+
+### 1.0.0
+
+- Choose between `light` and `dark` theme
+- Hide ads
+- Simplify website layout, remove clutter
+- Limit posts on hot and trending page by number of points
+- Choose which type of posts to see (`images`/`GIFs`/`videos`)
 
 ## Project structure
 
