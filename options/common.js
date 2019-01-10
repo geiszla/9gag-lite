@@ -149,6 +149,7 @@ async function restoreDefaultsAsync(optionIds) {
 
     changeTheme(defaultOptions.theme);
     checkBehavior(defaultOptions);
+    reloadTabs(isPopup);
   }
 }
 
