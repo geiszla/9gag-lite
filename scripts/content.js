@@ -103,7 +103,7 @@ const PostType = Object.freeze({
 
 // Only start post modification, if a list view of posts exists
 const containerElement = document.getElementById('container');
-if (containerElement) {
+if (containerElement && !window.location.pathname.includes('/u/')) {
   // Set up observer for script to run after AJAX page load
   createAddObserver(containerElement, (addedNode) => {
     if (addedNode.className && addedNode.className.includes('main-wrap')) {
