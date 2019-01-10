@@ -22,6 +22,7 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 - Normalize post order
 - Prevent loading hot posts in trending (by point limit)
 - Show OP's name if she/he commented on the post
+- Bigger posts
 - Multiple page layout options (e.g. hide only social links, hide only sidebar, etc.)
 - Censor emojis ;)
 

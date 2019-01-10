@@ -29,6 +29,7 @@ const defaultOptions = {
   // Download format
   downloadImageFormat: 'jpg',
   downloadVideoFormat: 'mp4',
+  isDownloadBigImage: true,
   isChangeFileName: true,
 
   // GIFs and Videos

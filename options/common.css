@@ -54,8 +54,8 @@ button:hover {
     white-space: normal;
 }
 
-.inline input {
-    margin-right: 1px;
+.inline input, .inline-input {
+    margin-right: 0;
 }
 
 .option-title {

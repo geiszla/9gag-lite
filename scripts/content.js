@@ -58,6 +58,11 @@ function getMediaSource() {
     : userOptions.downloadVideoFormat;
   const mediaSource = sources.find(source => source.format === preferredFormat) || sources[0];
 
+  // Download full resolution image
+  if (isImage && userOptions.isDownloadBigImage) {
+    mediaSource.url = mediaSource.url.replace('_460s', '_700b');
+  }
+
   // Change file name to include date, and post type
   let name;
   if (userOptions.isChangeFileName) {
