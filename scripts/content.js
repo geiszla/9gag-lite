@@ -87,50 +87,48 @@ const PostType = Object.freeze({
   STANDALONE_VIDEO: 'stanalonevideo'
 });
 
-// Set up observer for script to run after AJAX page load
-const pageLoadObserver = new MutationObserver((mutationsList) => {
-  mutationsList.forEach((mutation) => {
-    mutation.addedNodes.forEach((addedNode) => {
-      if (addedNode.className && addedNode.className.includes('main-wrap')) {
-        initialize();
-      }
+// Only start post modification, if a list view of posts exists
+const postListView = document.querySelector('[id^="list-view"]');
+if (postListView) {
+  // Set up observer for script to run after AJAX page load
+  const pageLoadObserver = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      mutation.addedNodes.forEach((addedNode) => {
+        if (addedNode.className && addedNode.className.includes('list-stream')) {
+          fixStream(addedNode);
+        }
+      });
     });
   });
-});
 
-const containerElement = document.getElementById('container');
-if (containerElement) {
-  pageLoadObserver.observe(containerElement, { childList: true, subtree: true });
+  pageLoadObserver.observe(postListView, { childList: true });
+
+  // Fix initial post streams
+  const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
+  [].forEach.call(initialStreamElements, (initialStream) => {
+    fixStream(initialStream);
+  });
+
+  // Stream #0 won't be readded on page change, only the articles in it change,
+  // therefore we need an observer on the articles themselves
+  const stream0Observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      mutation.addedNodes.forEach((addedNode) => {
+        if (addedNode.tagName === 'ARTICLE') {
+          fixStream(stream0);
+        }
+      });
+    });
+  });
+
+  const stream0 = postListView.children[0];
+  stream0Observer.observe(stream0, { childList: true, subtree: true });
 }
-
-// Initialize script
-initialize();
 
 
 /* --------------------------------------- Main functions --------------------------------------- */
 
-// Functions
-function initialize() {
-  const postListView = document.querySelector('[id^="list-view"]');
-
-  if (postListView) {
-    // Fix initial post streams
-    const initialStreamElements = postListView.querySelectorAll('[id^="stream-"]');
-    [].forEach.call(initialStreamElements, (initialStream) => {
-      fixPosts(initialStream);
-    });
-
-    // Fix streams as they loaded dynamically when page is scrolled
-    const streamObserver = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        mutation.addedNodes.forEach(fixPosts);
-      });
-    });
-    streamObserver.observe(postListView, { childList: true });
-  }
-}
-
-function fixPosts(streamElement) {
+function fixStream(streamElement) {
   const posts = Array.from(streamElement.getElementsByTagName('article'));
 
   // Filter post types
