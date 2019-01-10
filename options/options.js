@@ -1,4 +1,4 @@
-import { changeTheme, setupOptionsAsync } from './common.js';
+import { setupOptionsAsync } from './common.js';
 
 
 /* ---------------------------------------- Set up page ----------------------------------------- */
@@ -21,6 +21,6 @@ async function setVersion() {
   }
 }
 
-function checkBehavior(/* userOptions */) {
+function checkBehavior() {
   // Check the behavior of input HTML elements (e.g. disabled or not)
 }

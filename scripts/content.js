@@ -257,10 +257,13 @@ function zoomIntoAvatars() {
   // Observe for new comments loading dynamically
   createAddObserver(commentContainer, (addedNode) => {
     if (addedNode.tagName === 'DIV') {
-      const commentElement = addedNode.getElementsByClassName('avatar');
-      addAvatarTooltip(commentElement[0]);
+      const avatarElement = addedNode.getElementsByClassName('avatar')[0];
+
+      if (avatarElement) {
+        addAvatarTooltip(avatarElement);
+      }
     }
-  }, { childList: true });
+  }, { childList: true, subtree: true });
 
   // Apply avatar zoom to initial comments
   [].forEach.call(avatars, addAvatarTooltip);

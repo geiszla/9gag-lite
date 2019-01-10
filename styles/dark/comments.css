@@ -13,6 +13,14 @@
     border-left-color: var(--background-color-grey-700);
 }
 
+.post-afterbar-a .post-nav a.next:hover span.label {
+    background-color: var(--background-color-grey-600);
+}
+
+.post-afterbar-a .post-nav a.next:hover span.arrow {
+    border-left-color: var(--background-color-grey-600);
+}
+
 .post-afterbar-meta {
     border: none;
 }

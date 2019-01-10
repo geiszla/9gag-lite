@@ -27,7 +27,7 @@ themeSelector.addEventListener('change', () => { changeTheme(themeSelector.value
 
 /* ----------------------------------------- Functions ------------------------------------------ */
 
-function checkBehavior(/* userOptions */) {
+function checkBehavior() {
   // Disable checkboxes if they can't be used
   simplifyLayoutCheckbox.disabled = !hideAdsCheckbox.checked;
   hotLimitNumberInput.disabled = !hotLimitCheckbox.checked;
