@@ -16,11 +16,11 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 - Download `images`/`GIFs`/`videos`
 - Show length of videos and GIFs
 - Prevent autoplaying `GIFs`/`videos`
+- Zoom into profile pictures when user hovers over them
 
 ### Planned
 
 - Prevent post preload to save data
-- Zoom into profile pictures when user hovers over them
 - Show OP's name if she/he commented on the post
 - Copy link button under posts
 - Bigger posts
@@ -32,6 +32,11 @@ Download latest version from the [Chrome Web Store](https://chrome.google.com/we
 - Censor emojis ;)
 
 ## Changelog
+
+### 1.1.1
+
+- Zoom into profile pictures when user hovers over them
+- Post personalization fixes
 
 ### 1.1.0
 
