@@ -27,14 +27,13 @@ themeSelector.addEventListener('change', () => { changeTheme(themeSelector.value
 
 /* ----------------------------------------- Functions ------------------------------------------ */
 
-function checkBehavior(userOptions) {
+function checkBehavior(/* userOptions */) {
   // Disable checkboxes if they can't be used
   simplifyLayoutCheckbox.disabled = !hideAdsCheckbox.checked;
   hotLimitNumberInput.disabled = !hotLimitCheckbox.checked;
   trendingLimitNumberInput.disabled = !trendingLimitCheckbox.checked;
 
   validateTypeFilter();
-  changeTheme(userOptions.theme);
 }
 
 function validateTypeFilter() {

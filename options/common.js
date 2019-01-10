@@ -68,7 +68,7 @@ export async function setupOptionsAsync(currentCheckBehavior, isFromPopup) {
 
   // Check behavior on checkbox state change
   [].forEach.call(document.querySelectorAll('input[type="checkbox"]'), (checkbox) => {
-    checkbox.addEventListener('click', () => checkBehavior(userOptions));
+    checkbox.addEventListener('click', () => checkBehavior());
   });
 }
 

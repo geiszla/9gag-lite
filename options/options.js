@@ -21,7 +21,6 @@ async function setVersion() {
   }
 }
 
-function checkBehavior(userOptions) {
+function checkBehavior(/* userOptions */) {
   // Check the behavior of input HTML elements (e.g. disabled or not)
-  changeTheme(userOptions.theme);
 }
