@@ -2,7 +2,7 @@
     "manifest_version": 2,
    
     "name": "9GAG Lite",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Change 9gag as you want to work like it should",
 
     "minimum_chrome_version": "53",
