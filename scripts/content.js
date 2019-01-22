@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
       console.log('Media download error:');
       console.log(error);
 
-      alert('This media cannot be downloaded. You can only download posts.');
+      alert('This media cannot be downloaded. If you think it should be, write an email to us.');
     }
   }
 });
@@ -291,8 +291,10 @@ function addAvatarTooltip(avatarElement) {
       `;
 
     if (tooltip) {
+      // If tooltip already exists, just make it visible
       tooltip.style = tooltipStyle;
     } else {
+      // If it doesn't, create one and add it to the DOM
       const avatarImage = avatarElement.getElementsByTagName('img')[0];
 
       tooltip = document.createElement('img');
@@ -304,7 +306,9 @@ function addAvatarTooltip(avatarElement) {
   });
 
   avatarElement.addEventListener('mouseleave', () => {
-    tooltip.style = 'display: none';
+    if (tooltip) {
+      tooltip.style = 'display: none';
+    }
   });
 }
 
